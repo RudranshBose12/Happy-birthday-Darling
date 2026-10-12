@@ -70,7 +70,7 @@ h1 { font: 600 clamp(3.7rem,11vw,7.7rem)/1.03 var(--serif); color: #4e8bc3; lett
 .narrow { max-width: 650px; margin-left: auto; margin-right: auto; }
 .center-heading { text-align: center; margin: 0 auto 2.4rem; max-width: 800px; }
 .center-heading .script-kicker { margin-top: .7rem; }
-.chapter-footer { max-width: 1120px; margin: 2.5rem auto 0; padding-top: 1.1rem; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.chapter-footer { position: relative; z-index: 2; max-width: 1120px; margin: 2.5rem auto 0; padding-top: 1.1rem; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .chapter-footer > span { font-size: .58rem; }
 .next-btn { border: 1px solid rgba(104,157,208,.3); background: rgba(255,255,255,.76); color: var(--blue-dark); border-radius: 99px; padding: .75rem 1rem; font-size: .82rem; font-weight: 700; transition: .2s; }
 .next-btn span { margin-left: .5rem; color: var(--pink-dark); }
@@ -164,7 +164,7 @@ h1 { font: 600 clamp(3.7rem,11vw,7.7rem)/1.03 var(--serif); color: #4e8bc3; lett
 .stars-chapter h2 em { color: #b7d8ff; }
 .stars-chapter p { color: #c5d7ef; }
 .stars-content { position: relative; z-index: 1; text-align: center; max-width: 800px; padding: 2rem 0; }
-.starfield { position: absolute; inset: 0; opacity: .7; background-image: radial-gradient(2px 2px at 10% 20%,#fff,transparent),radial-gradient(1px 1px at 20% 80%,#c3e4ff,transparent),radial-gradient(2px 2px at 70% 30%,#fff,transparent),radial-gradient(1px 1px at 90% 70%,#fff,transparent),radial-gradient(2px 2px at 55% 12%,#c3e4ff,transparent),radial-gradient(1px 1px at 40% 60%,#fff,transparent),radial-gradient(2px 2px at 80% 50%,#fff,transparent); background-size: 250px 230px; animation: starMove 25s linear infinite; }
+.starfield { position: absolute; inset: 0; pointer-events: none; opacity: .7; background-image: radial-gradient(2px 2px at 10% 20%,#fff,transparent),radial-gradient(1px 1px at 20% 80%,#c3e4ff,transparent),radial-gradient(2px 2px at 70% 30%,#fff,transparent),radial-gradient(1px 1px at 90% 70%,#fff,transparent),radial-gradient(2px 2px at 55% 12%,#c3e4ff,transparent),radial-gradient(1px 1px at 40% 60%,#fff,transparent),radial-gradient(2px 2px at 80% 50%,#fff,transparent); background-size: 250px 230px; animation: starMove 25s linear infinite; }
 @keyframes starMove { to { background-position: 250px 230px; } }
 .constellation { display: flex; justify-content: center; align-items: center; gap: clamp(1rem,4vw,3rem); margin: 2.5rem auto; color: #e9d8ff; font-size: clamp(1.4rem,4vw,2.5rem); }
 .constellation span:nth-child(3) { color: #ffcde2; font-size: 3.4rem; text-shadow: 0 0 25px rgba(255,205,226,.6); }
