@@ -149,35 +149,127 @@ $("#giftBox").addEventListener("click", event => {
   if (opening) createHeartBurst(button.getBoundingClientRect());
 });
 
-// Couple quiz: sample questions are intentionally easy to edit.
+// Couple quiz: personalized questions about our memories and love.
 const quizQuestions = [
   {
-    question: "What's our very important little mission?",
-    options: ["Become professional nap experts", "100 meets before long distance", "Eat every dessert in the world"],
-    answer: 1,
-    correct: "Correct, Baby! Thirteen little chapters down, and so many more memories to make. ♡",
-    wrong: "Cute guess! But our mission is 100 meets before long distance. We have memories to collect! ♡"
+    "question": "What's my favourite nickname for you? 👑",
+    "options": [
+      "A) Aloo Bhujia",
+      "B) My Queen",
+      "C) Bona Badmash",
+      "D) Cutie"
+    ],
+    "answer": 1,
+    "correct": "That's right! My Queen. 👑❤️",
+    "wrong": "It's My Queen! 👑❤️"
   },
   {
-    question: "What's one of my favorite things about our little world?",
-    options: ["We have to act cool all the time", "We can be completely ourselves together", "We never tell silly jokes"],
-    answer: 1,
-    correct: "Yes! I love that I can be my most ridiculous self with you and still feel completely loved. ♡",
-    wrong: "It's that we can be completely ourselves together. Weirdness and all, Shona. ♡"
+    "question": "What do I call you when you do dumb stuff? 😭",
+    "options": [
+      "A) Galaxy Destroyer 🌌",
+      "B) Befkoof",
+      "C) Dumb",
+      "D) Dabba"
+    ],
+    "answer": 3,
+    "correct": "Correct, Dabba! 😭❤️",
+    "wrong": "It's Dabba! You know I call you that. 😭"
   },
   {
-    question: "What can turn an ordinary day into a favorite memory?",
-    options: ["Being together", "A perfect weather forecast", "A very serious spreadsheet"],
-    answer: 0,
-    correct: "Exactly. No matter what we do, being with you makes everything better. ♡",
-    wrong: "My answer is being with you. You have a way of making ordinary moments feel special. ♡"
+    "question": "When is my birthday? 🎂",
+    "options": [
+      "A) 21st February",
+      "B) 9th February",
+      "C) 12th February",
+      "D) 6th February"
+    ],
+    "answer": 2,
+    "correct": "Yes! 12th February. 🎂❤️",
+    "wrong": "It's 12th February! 🎂❤️"
   },
   {
-    question: "What's the real prize for finishing this quiz?",
-    options: ["A formal certificate", "Unlimited bragging rights", "More kisses from your boy"],
-    answer: 2,
-    correct: "Absolutely correct. Redeemable for an unreasonable number of kisses. ♡",
-    wrong: "Nice try! The prize is more kisses from your boy. This prize is non-negotiable. ♡"
+    "question": "What's my favourite thing about going on dates with you? 💗",
+    "options": [
+      "A) Getting to explore expensive places",
+      "B) Getting free food 😭",
+      "C) Spending time with you and making memories together",
+      "D) Having an excuse to skip work"
+    ],
+    "answer": 2,
+    "correct": "Exactly! Spending time with you and making memories together. 💗",
+    "wrong": "It's spending time with you and making memories together. 💗"
+  },
+  {
+    "question": "What do you often do whenever our plans don't go the way we expected? 🫶",
+    "options": [
+      "A) Get angry and abandon the date",
+      "B) Make me solve everything alone",
+      "C) Pretend we planned it that way",
+      "D) Help figure things out and find another way"
+    ],
+    "answer": 3,
+    "correct": "That's right! We figure it out together. 🫶",
+    "wrong": "You help figure things out and find another way. That's what makes us a team. 🫶"
+  },
+  {
+    "question": "What makes our auto rides so special to me? 🛺❤️",
+    "options": [
+      "A) Getting somewhere as quickly as possible",
+      "B) Holding hands and thighs while stealing kisses",
+      "C) The traffic and beautiful roads",
+      "D) Sitting quietly without talking"
+    ],
+    "answer": 1,
+    "correct": "Correct! Holding hands and thighs while stealing kisses. 🛺❤️",
+    "wrong": "It's holding hands and thighs while stealing kisses. 🛺❤️"
+  },
+  {
+    "question": "What do I love most about the way you show affection? 💋",
+    "options": [
+      "A) When you pull me closer to kiss me",
+      "B) When you buy me food",
+      "C) When you let me win arguments",
+      "D) When you make fun of me"
+    ],
+    "answer": 0,
+    "correct": "Yes! When you pull me closer to kiss me. 💋",
+    "wrong": "It's when you pull me closer to kiss me. 💋"
+  },
+  {
+    "question": "Remember that date when our plans went wrong and it started raining? 🌧️ What happened?",
+    "options": [
+      "A) We went straight home",
+      "B) We spent the rest of the day shopping",
+      "C) We visited another Hanuman temple, and you lent me your umbrella",
+      "D) We found a restaurant and stayed there"
+    ],
+    "answer": 2,
+    "correct": "You remember! Another Hanuman temple, and your umbrella. 🌧️❤️",
+    "wrong": "We visited another Hanuman temple, and you lent me your umbrella. 🌧️❤️"
+  },
+  {
+    "question": "Why do I write little paragraphs about our dates? 💌",
+    "options": [
+      "A) To remember how much money we spend",
+      "B) To make sure you never forget anything 😭",
+      "C) To tease you forever",
+      "D) To preserve our memories and remember how these moments felt"
+    ],
+    "answer": 3,
+    "correct": "Exactly! To preserve our memories and remember how these moments felt. 💌",
+    "wrong": "It's to preserve our memories and remember how these moments felt. 💌"
+  },
+  {
+    "question": "What is something you do that makes me feel loved even without saying a single word? 🥹",
+    "options": [
+      "A) The way you look at me",
+      "B) The way you reach for my hand",
+      "C) The way you pull me closer",
+      "D) All of the above ❤️"
+    ],
+    "answer": 3,
+    "correct": "All of the above! Every little thing makes me feel loved. 🥹❤️",
+    "wrong": "It's all of the above—the way you look at me, reach for my hand, and pull me closer. 🥹❤️"
   }
 ];
 let quizIndex = 0;
@@ -219,6 +311,23 @@ $("#quizNext").addEventListener("click", () => {
   if (quizIndex < quizQuestions.length - 1) {
     quizIndex++;
     renderQuiz();
+  } else {
+    $("#quizQuestion").textContent = "Your final result: 100% my favorite person.";
+    $("#quizOptions").innerHTML = "";
+    $("#quizFeedback").textContent = "Whether you got every answer right or not, you're still my favorite answer to everything. Come here and collect your prize: kisses. ♡";
+    $("#quizFeedback").hidden = false;
+    $("#quizNext").hidden = true;
+    $("#quizStep").textContent = "QUIZ COMPLETE · LOVE YOU ALWAYS";
+    $("#quizProgressFill").style.width = "100%";
+    const restart = document.createElement("button");
+    restart.type = "button";
+    restart.className = "secondary-btn";
+    restart.textContent = "Play again ♡";
+    restart.addEventListener("click", () => { quizIndex = 0; renderQuiz(); });
+    $("#quizOptions").appendChild(restart);
+  }
+});
+renderQuiz();
   } else {
     $("#quizQuestion").textContent = "Your final result: 100% my favorite person.";
     $("#quizOptions").innerHTML = "";
