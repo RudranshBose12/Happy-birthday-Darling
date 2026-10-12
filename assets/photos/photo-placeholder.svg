@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#edf7ff"/><stop offset=".55" stop-color="#d8ebff"/><stop offset="1" stop-color="#fbe9f4"/></linearGradient>
+    <radialGradient id="glow"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <circle cx="120" cy="180" r="190" fill="url(#glow)"/><circle cx="680" cy="800" r="260" fill="url(#glow)"/>
+  <g fill="#8ebce7" opacity=".8" font-family="Georgia,serif" font-size="56">
+    <text x="95" y="125">✧</text><text x="650" y="210">♡</text><text x="105" y="810">♡</text><text x="625" y="690">✦</text>
+  </g>
+  <g transform="translate(400 430)">
+    <circle cx="0" cy="-30" r="110" fill="#fff" opacity=".58"/>
+    <path d="M-130 50 C-130 -20 -35 -35 0 30 C35 -35 130 -20 130 50 C130 115 45 170 0 205 C-45 170 -130 115 -130 50Z" fill="#f6bfd9" opacity=".9"/>
+    <path d="M-75 25 Q-50 -5 -25 25 M25 25 Q50 -5 75 25" fill="none" stroke="#9a6c91" stroke-width="8" stroke-linecap="round"/>
+    <path d="M-30 65 Q0 90 30 65" fill="none" stroke="#9a6c91" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="-48" cy="42" r="10" fill="#9a6c91"/><circle cx="48" cy="42" r="10" fill="#9a6c91"/>
+  </g>
+  <rect x="70" y="760" width="660" height="150" rx="28" fill="#fff" opacity=".8"/>
+  <text x="400" y="815" text-anchor="middle" font-family="Georgia,serif" font-size="35" fill="#547fa9">Your photo goes here</text>
+  <text x="400" y="865" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" fill="#8aa8c5">Replace this placeholder with a memory ♡</text>
+</svg>

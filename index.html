@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#dff1ff">
+  <meta name="description" content="A little birthday universe made with love for Sreejani.">
+  <title>For Sreejani, My Shona ♡</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Sacramento&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="ambient" aria-hidden="true">
+    <span class="floaty f1">♡</span><span class="floaty f2">✦</span>
+    <span class="floaty f3">୨୧</span><span class="floaty f4">♡</span>
+    <span class="floaty f5">✧</span><span class="floaty f6">♡</span>
+  </div>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Back to beginning"><span class="brand-heart">♡</span> our little universe</a>
+    <div class="topbar-right">
+      <span class="tiny-label">MADE WITH LOVE FOR SREEJANI</span>
+      <button class="sound-toggle" id="musicToggle" type="button" aria-pressed="false" title="Play or pause our song">♫ <span id="musicLabel">Our song</span></button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME / OPENING -->
+    <section class="screen home-screen active" id="home" aria-labelledby="home-title">
+      <div class="home-cloud cloud-a" aria-hidden="true"></div><div class="home-cloud cloud-b" aria-hidden="true"></div>
+      <div class="hero-sparkle sparkle-a" aria-hidden="true">✧</div><div class="hero-sparkle sparkle-b" aria-hidden="true">✦</div>
+      <div class="hero-content">
+        <div class="eyebrow"><span>✧</span> OCTOBER 19, 2026 <span>✧</span></div>
+        <div class="hero-crown" aria-hidden="true">♕</div>
+        <p class="script-kicker">For my sweetest girl</p>
+        <h1 id="home-title">Sreejani<span class="title-heart">♡</span></h1>
+        <p class="hero-subtitle">My Shona. My Baby. My favorite little universe.</p>
+        <p class="hero-copy">Somewhere in this enormous universe, there is a little world that feels like home to me.<br>And that world is <em>you.</em></p>
+        <button class="primary-btn" id="beginBtn" type="button">Open your birthday surprise, Shona <span>♡</span></button>
+        <p class="micro-note">A tiny world made just for you ✧</p>
+      </div>
+      <div class="bottom-hint"><span class="hint-line"></span> YOUR STORY STARTS HERE <span class="hint-line"></span></div>
+    </section>
+
+    <!-- CHAPTER NAVIGATION -->
+    <nav class="chapter-nav" id="chapterNav" aria-label="Birthday story chapters" hidden>
+      <button class="nav-home" id="homeBtn" type="button" aria-label="Return to opening">♡</button>
+      <div class="chapter-progress" aria-label="Story progress"><span id="progressFill"></span></div>
+      <span class="chapter-count" id="chapterCount">01 / 10</span>
+      <button class="nav-menu-btn" id="chapterMenuBtn" type="button" aria-expanded="false" aria-controls="chapterMenu">Chapters <span>⌄</span></button>
+      <div class="chapter-menu" id="chapterMenu" hidden>
+        <button type="button" data-chapter="1">01 · Your royal birthday</button>
+        <button type="button" data-chapter="2">02 · Our little world</button>
+        <button type="button" data-chapter="3">03 · A letter for you</button>
+        <button type="button" data-chapter="4">04 · Little things I love</button>
+        <button type="button" data-chapter="5">05 · 100 meets together</button>
+        <button type="button" data-chapter="6">06 · Written in the stars</button>
+        <button type="button" data-chapter="7">07 · A little gift</button>
+        <button type="button" data-chapter="8">08 · Our little quiz</button>
+        <button type="button" data-chapter="9">09 · Our memories</button>
+        <button type="button" data-chapter="10">10 · One last thing</button>
+      </div>
+    </nav>
+
+    <!-- CHAPTER 1 -->
+    <section class="screen chapter" id="chapter-1" aria-labelledby="ch1-title" hidden>
+      <div class="chapter-inner birthday-layout">
+        <div class="chapter-heading">
+          <span class="chapter-kicker">CHAPTER ONE · THE DAY MY FAVORITE GIRL WAS BORN</span>
+          <p class="script-kicker">A royal announcement</p>
+          <h2 id="ch1-title">All hail the birthday <em>queen.</em></h2>
+          <p class="lead">Happy birthday to my Sreejani, my Shona, my Baby, my favorite person in this entire universe.</p>
+          <p>Today is about celebrating you: your beautiful heart, your laugh, your dreams, your softness, your strength, and every little thing that makes you unmistakably you.</p>
+          <div class="royal-tags"><span>♡ My Queen</span><span>✧ My Goddess</span><span>୨୧ My Favorite Human</span></div>
+        </div>
+        <div class="cake-stage">
+          <div class="cake-halo"></div>
+          <div class="cake" id="birthdayCake" role="button" tabindex="0" aria-label="Blow out the birthday candles">
+            <div class="candle-row"><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span></div>
+            <div class="cake-top"></div><div class="cake-middle"><span>♡</span><span>♡</span><span>♡</span></div><div class="cake-bottom"></div>
+            <div class="cake-plate"></div>
+          </div>
+          <p class="cake-instruction">Tap the cake to make a birthday wish ✧</p>
+          <div class="wish-reveal" id="wishReveal" hidden>My wish is that this beautiful world is as kind to you as your heart has been to mine. ♡</div>
+        </div>
+      </div>
+      <div class="chapter-footer"><span>ONE MORE YEAR OF YOU ✧</span><button class="next-btn" data-next="2">Our little world <span>→</span></button></div>
+    </section>
+
+    <!-- CHAPTER 2 -->
+    <section class="screen chapter" id="chapter-2" aria-labelledby="ch2-title" hidden>
+      <div class="chapter-inner">
+        <div class="center-heading">
+          <span class="chapter-kicker">CHAPTER TWO · JUST US</span>
+          <p class="script-kicker">A place only we understand</p>
+          <h2 id="ch2-title">Welcome to <em>our little world.</em></h2>
+          <p class="lead narrow">No matter where we go or what we do, being together somehow makes everything better.</p>
+        </div>
+        <div class="memory-collage">
+          <figure class="polaroid tilt-left"><img src="assets/photos/photo-placeholder.svg" alt="Replace with a favorite photo of us"><figcaption>my favorite place is beside you ♡</figcaption></figure>
+          <div class="world-note"><span class="note-sparkle">✦</span><p>The world can be loud, life can be confusing, and everything can feel like a lot sometimes.</p><p>But then there's <em>us.</em> And somehow, even an ordinary day becomes something I want to remember.</p><span class="note-signature">— your boy ♡</span></div>
+          <figure class="polaroid tilt-right"><img src="assets/photos/photo-placeholder.svg" alt="Replace with a candid photo of us"><figcaption>another little memory to keep</figcaption></figure>
+        </div>
+        <div class="little-world-pills"><span>shared food 🍰</span><span>unexpected kisses ♡</span><span>hand-holding</span><span>being silly together</span><span>supporting each other's dreams</span><span>our awkward little moments</span></div>
+      </div>
+      <div class="chapter-footer"><span>OUR WORLD, OUR RULES ♡</span><button class="next-btn" data-next="3">A letter for you <span>→</span></button></div>
+    </section>
+
+    <!-- CHAPTER 3 -->
+    <section class="screen chapter letter-chapter" id="chapter-3" aria-labelledby="ch3-title" hidden>
+      <div class="chapter-inner letter-layout">
+        <div class="letter-intro">
+          <span class="chapter-kicker">CHAPTER THREE · FROM MY HEART TO YOURS</span>
+          <p class="script-kicker">A little something I've been carrying</p>
+          <h2 id="ch3-title">A letter I wish I could fit into your <em>hands.</em></h2>
+          <p>Take your time with this one, Baby. Every word is for you.</p>
+          <div class="envelope-wrap" id="envelopeWrap">
+            <button class="envelope" id="openLetterBtn" type="button" aria-expanded="false" aria-controls="loveLetter">
+              <span class="envelope-back"></span><span class="envelope-flap"></span><span class="envelope-front"></span><span class="envelope-seal">♡</span>
+              <span class="envelope-label">For my Shona</span>
+            </button>
+            <span class="envelope-hint">click to open your letter</span>
+          </div>
+        </div>
+        <article class="love-letter" id="loveLetter" hidden>
+          <div class="letter-topline">♡ &nbsp; OCTOBER 19, 2026 &nbsp; ♡</div>
+          <h3>To my Shona, on your birthday</h3>
+          <p>My dearest Sreejani,</p>
+          <p>Happy birthday, my love. If I could give you one thing today, it would be the ability to see yourself through my eyes, even for just a little while. Maybe then you'd understand why I look at you the way I do, why your smile means so much to me, and why I feel so lucky to be loved by you.</p>
+          <p>There are so many things I'm grateful to you for. Thank you for the ways you've changed my life and helped me grow. Whenever I've struggled, you've believed in me. Whenever I've felt uncertain about my future, you've reminded me that I still can, that there are beautiful things worth looking forward to, and that a difficult moment doesn't have to be the end of my story.</p>
+          <p>You haven't magically fixed everything, and you've never needed to. Having someone who loves me, cares for me, and stands beside me the way you do has helped me through moments I didn't know how to handle. You have made it easier for me to believe in myself, and I will always be grateful for that.</p>
+          <p>I love the way your eyes light up when you see me. I love the way you compliment me when I can't understand what you see in me. I love the way you reach for my hand, pull me closer, kiss me unexpectedly, and make affection feel like the most natural thing in the world.</p>
+          <p>I love how you take care of me when I haven't quite figured myself out. I love our silly moments, our childish behavior, our awkwardness, our dirty jokes, our dates, our shared food, and the way you feed me. I love that I can be completely myself with you, without pretending to be someone else. I love how we support each other's dreams even when they take us in different directions.</p>
+          <p>And I especially love our little world. No matter where we go or what we do, being together somehow makes everything better. You can turn a day that's going terribly into a memory I want to keep forever. You make ordinary things feel special just by being there.</p>
+          <p>I know life won't always be easy. I can't promise that every day will be perfect or that we'll never have difficult moments. But I promise that I want to keep learning how to love you better. I want to keep discovering new things about you, even when you think I already know everything. I want to keep making memories with you, even when the new and exciting becomes familiar.</p>
+          <p>I want to keep choosing you, not only when loving you feels easy, but also when life gets complicated. I want to celebrate your dreams, listen to you when things are difficult, make you laugh when I can, and give you the same kind of love and reassurance you've given me.</p>
+          <p>And then there's our ridiculous little plan: a hundred meets before long distance. We've made it to thirteen, and I can't wait to see how many more memories we can squeeze into our little collection. But I hope you know that even when the distance comes, it won't erase the things we've built. There will still be dates to plan, stories to tell, food to share when we're together again, and a whole future of memories we haven't made yet.</p>
+          <p>On your birthday, I hope you feel as loved, appreciated, and special as you make me feel. I hope this next year brings you beautiful surprises, progress toward your dreams, reasons to be proud of yourself, and plenty of moments when your eyes light up with that beautiful happiness I love so much.</p>
+          <p>Thank you for being you. Thank you for choosing me. Thank you for letting me be part of your life.</p>
+          <p>Happy birthday, my Shona. My Baby. My favorite person. My little universe.</p>
+          <p class="letter-final">I love you very much, and I want to keep loving you, always. ♡</p>
+          <p class="letter-signature">Forever your boy, with all my love.</p>
+        </article>
+      </div>
+      <div class="chapter-footer"><span>WRITTEN WITH ALL MY LOVE ♡</span><button class="next-btn" data-next="4">Little things I love <span>→</span></button></div>
+    </section>
+
+    <!-- CHAPTER 4 -->
+    <section class="screen chapter" id="chapter-4" aria-labelledby="ch4-title" hidden>
+      <div class="chapter-inner">
+        <div class="center-heading">
+          <span class="chapter-kicker">CHAPTER FOUR · THE DETAILS THAT ARE YOU</span>
+          <p class="script-kicker">A million little reasons</p>
+          <h2 id="ch4-title">The little things I fall in <em>love with.</em></h2>
+          <p class="lead narrow">Tap a heart, Baby. There's always another reason.</p>
+        </div>
+        <div class="reason-grid" id="reasonGrid">
+          <button class="reason-card" type="button" data-reason="The way your eyes light up when you see me. I wish I could save that look in a little jar and keep it forever."><span>♡</span><small>reason no. 01</small><b>Your sparkly eyes</b><i>tap to open</i></button>
+          <button class="reason-card" type="button" data-reason="The unexpected kisses that still manage to catch me by surprise and make an ordinary moment feel like our own little movie."><span>♡</span><small>reason no. 02</small><b>Your surprise kisses</b><i>tap to open</i></button>
+          <button class="reason-card" type="button" data-reason="The way you reach for my hand and place it wherever you want without thinking twice. Being close to you feels so natural."><span>♡</span><small>reason no. 03</small><b>Your hand in mine</b><i>tap to open</i></button>
+          <button class="reason-card" type="button" data-reason="The way you believe in me when I struggle to believe in myself. You remind me that I can keep going, and that means more than I can explain."><span>♡</span><small>reason no. 04</small><b>Your faith in me</b><i>tap to open</i></button>
+          <button class="reason-card" type="button" data-reason="Our childish behavior, awkward moments, and ridiculous jokes. I love that we can be absolute weirdos together and still feel completely loved."><span>♡</span><small>reason no. 05</small><b>Our silly little world</b><i>tap to open</i></button>
+          <button class="reason-card" type="button" data-reason="The way you take care of me, share your food, feed me, and notice the little things. Your love shows up in a thousand tiny ways."><span>♡</span><small>reason no. 06</small><b>Your little acts of care</b><i>tap to open</i></button>
+          <button class="reason-card" type="button" data-reason="The way you choose me, and the way you make room for my dreams while still following yours. I love being on your team."><span>♡</span><small>reason no. 07</small><b>Choosing each other</b><i>tap to open</i></button>
+          <button class="reason-card" type="button" data-reason="You can turn a day that isn't going well into a memory I want to keep forever. Sometimes your presence is the whole plot twist."><span>♡</span><small>reason no. 08</small><b>Your everyday magic</b><i>tap to open</i></button>
+        </div>
+        <div class="reason-reveal" id="reasonReveal" role="status" aria-live="polite"><span class="reveal-heart">♡</span><p>Every little thing about you gives me another reason to fall in love.</p></div>
+      </div>
+      <div class="chapter-footer"><span>AND I COULD KEEP GOING FOREVER ♡</span><button class="next-btn" data-next="5">Our 100 meets <span>→</span></button></div>
+    </section>
+
+    <!-- CHAPTER 5 -->
+    <section class="screen chapter" id="chapter-5" aria-labelledby="ch5-title" hidden>
+      <div class="chapter-inner tracker-layout">
+        <div class="tracker-copy">
+          <span class="chapter-kicker">CHAPTER FIVE · OUR VERY IMPORTANT SILLY PLAN</span>
+          <p class="script-kicker">One hundred little adventures</p>
+          <h2 id="ch5-title">100 meets before <em>long distance.</em></h2>
+          <p class="lead">We're not counting down to goodbye. We're counting up all the ways we've loved being together.</p>
+          <p>We made this silly little plan because we wanted to collect as much of us as we could before life puts some distance between us. Every meet is another story, another laugh, another hug, another ordinary day that turns out to be special because it's ours.</p>
+          <p>And after the hundredth meet? The story keeps going. There will still be calls, plans, reunions, and so many memories we haven't made yet.</p>
+          <div class="next-date-card"><span class="mini-icon">✧</span><div><b>Our next adventure</b><small>To be decided by my favorite person and me ♡</small></div></div>
+        </div>
+        <div class="tracker-card">
+          <div class="tracker-card-top"><span>OUR LITTLE ADVENTURE</span><span>♡</span></div>
+          <div class="tracker-number"><strong id="meetCount">13</strong><span>/ 100</span></div>
+          <p class="tracker-label">memories made together</p>
+          <div class="progress-track" role="progressbar" aria-label="Meets completed" aria-valuemin="0" aria-valuemax="100" aria-valuenow="13" id="meetProgress"><span id="meetProgressFill"></span></div>
+          <div class="progress-meta"><span id="progressPercent">13% complete</span><span id="remainingCount">87 to go ♡</span></div>
+          <div class="meet-grid" id="meetGrid" aria-label="One hundred meet markers"></div>
+          <p class="tracker-footnote">The first 13 hearts are already yours. The rest are waiting for new memories.</p>
+        </div>
+      </div>
+      <div class="chapter-footer"><span>13 DOWN, 87 LITTLE ADVENTURES TO GO ♡</span><button class="next-btn" data-next="6">Written in the stars <span>→</span></button></div>
+    </section>
+
+    <!-- CHAPTER 6 -->
+    <section class="screen chapter stars-chapter" id="chapter-6" aria-labelledby="ch6-title" hidden>
+      <div class="starfield" aria-hidden="true"></div>
+      <div class="chapter-inner stars-content">
+        <span class="chapter-kicker">CHAPTER SIX · A LITTLE COSMIC TRUTH</span>
+        <p class="script-kicker">Somewhere between the moon and me</p>
+        <h2 id="ch6-title">Even the stars would find their way to <em>you.</em></h2>
+        <div class="constellation" aria-hidden="true"><span>✦</span><span>·</span><span>♡</span><span>·</span><span>✧</span><span>·</span><span>✦</span></div>
+        <p class="lead narrow">If I could give you a galaxy, I would.</p>
+        <p class="star-poem">But since I can't, I'll keep giving you the little pieces of my universe that I can: my time, my attention, my honesty, my affection, my dreams, and the promise that I want you beside me as I grow.</p>
+        <p class="star-poem">The world is enormous, and life will take us through places we haven't seen yet. But no matter how big the universe gets, I hope we keep finding our way back to our little world.</p>
+        <div class="star-signature">you, me, and all the tomorrows ♡</div>
+      </div>
+      <div class="chapter-footer"><span>MY FAVORITE CONSTELLATION IS YOU ✧</span><button class="next-btn" data-next="7">A little gift <span>→</span></button></div>
+    </section>
+
+    <!-- CHAPTER 7 -->
+    <section class="screen chapter" id="chapter-7" aria-labelledby="ch7-title" hidden>
+      <div class="chapter-inner gift-layout">
+        <div class="center-heading">
+          <span class="chapter-kicker">CHAPTER SEVEN · SOMETHING JUST FOR YOU</span>
+          <p class="script-kicker">A little box of future memories</p>
+          <h2 id="ch7-title">A gift, wrapped in all my <em>love.</em></h2>
+          <p class="lead narrow">There's no way a little box could hold everything I want to give you. But let's try anyway.</p>
+        </div>
+        <button class="gift-box" id="giftBox" type="button" aria-expanded="false" aria-controls="giftMessage" aria-label="Open your birthday present">
+          <span class="gift-sparkles">✧ &nbsp; ✦ &nbsp; ✧</span><span class="gift-lid"></span><span class="gift-body"><span class="gift-ribbon-v"></span><span class="gift-bow">୨୧</span><span class="gift-heart">♡</span></span>
+          <span class="gift-hint">tap to unwrap your surprise</span>
+        </button>
+        <div class="gift-message" id="giftMessage" hidden>
+          <span class="big-heart">♡</span>
+          <h3>One promise, just for you.</h3>
+          <p>This little box can't hold everything I want to give you, so I'm filling it with something better: all the things I still want us to experience together.</p>
+          <p>More dates. More shared food. More ridiculous jokes. More holding your hand. More learning how to love each other better. More ordinary days that become our favorite memories.</p>
+          <p class="gift-last-line">The best parts of our story are still ahead of us, Baby. ♡</p>
+        </div>
+      </div>
+      <div class="chapter-footer"><span>THE BEST GIFTS ARE STILL TO COME ♡</span><button class="next-btn" data-next="8">Our little quiz <span>→</span></button></div>
+    </section>
+
+    <!-- CHAPTER 8 -->
+    <section class="screen chapter quiz-chapter" id="chapter-8" aria-labelledby="ch8-title" hidden>
+      <div class="chapter-inner quiz-layout">
+        <div class="center-heading">
+          <span class="chapter-kicker">CHAPTER EIGHT · A VERY SERIOUS LOVE TEST</span>
+          <p class="script-kicker">No pressure, princess</p>
+          <h2 id="ch8-title">How well do you know <em>our little world?</em></h2>
+          <p class="lead narrow">A tiny quiz about us. The only prize is more kisses. ♡</p>
+        </div>
+        <div class="quiz-card" id="quizCard">
+          <div class="quiz-top"><span id="quizStep">QUESTION 1 OF 4</span><span>♡</span></div>
+          <div class="quiz-progress"><span id="quizProgressFill"></span></div>
+          <h3 id="quizQuestion">What's our very important little mission?</h3>
+          <div class="quiz-options" id="quizOptions">
+            <button type="button" data-answer="a">Become professional nap experts</button>
+            <button type="button" data-answer="b">100 meets before long distance</button>
+            <button type="button" data-answer="c">Eat every dessert in the world</button>
+          </div>
+          <div class="quiz-feedback" id="quizFeedback" role="status" aria-live="polite" hidden></div>
+          <button class="secondary-btn" id="quizNext" type="button" hidden>Next question ♡</button>
+        </div>
+        <p class="quiz-disclaimer">These are editable sample questions. You can personalize them with your real inside jokes in <code>script.js</code>.</p>
+      </div>
+      <div class="chapter-footer"><span>YOU'RE MY FAVORITE ANSWER ANYWAY ♡</span><button class="next-btn" data-next="9">Our memories <span>→</span></button></div>
+    </section>
+
+    <!-- CHAPTER 9 -->
+    <section class="screen chapter" id="chapter-9" aria-labelledby="ch9-title" hidden>
+      <div class="chapter-inner">
+        <div class="center-heading">
+          <span class="chapter-kicker">CHAPTER NINE · LITTLE MOMENTS, BIG LOVE</span>
+          <p class="script-kicker">A scrapbook of us</p>
+          <h2 id="ch9-title">Proof that ordinary days can be <em>magic.</em></h2>
+          <p class="lead narrow">Replace these placeholders with the photos you love most. Each one can hold a memory only you two know.</p>
+        </div>
+        <div class="photo-gallery">
+          <button class="gallery-photo" type="button" data-caption="A day I wish I could visit again. ♡"><img src="assets/photos/photo-placeholder.svg" alt="Photo placeholder one"><span>our favorite day</span></button>
+          <button class="gallery-photo" type="button" data-caption="You, me, and a moment that became a memory."><img src="assets/photos/photo-placeholder.svg" alt="Photo placeholder two"><span>just us</span></button>
+          <button class="gallery-photo" type="button" data-caption="I love the little things we do without even thinking."><img src="assets/photos/photo-placeholder.svg" alt="Photo placeholder three"><span>the little things</span></button>
+          <button class="gallery-photo" type="button" data-caption="Another tiny piece of our very own world."><img src="assets/photos/photo-placeholder.svg" alt="Photo placeholder four"><span>our little world</span></button>
+          <button class="gallery-photo" type="button" data-caption="A memory I want to keep close, always."><img src="assets/photos/photo-placeholder.svg" alt="Photo placeholder five"><span>one to keep</span></button>
+          <button class="gallery-photo" type="button" data-caption="And many, many more to come, my Shona."><img src="assets/photos/photo-placeholder.svg" alt="Photo placeholder six"><span>to be continued…</span></button>
+        </div>
+        <div class="secret-note-strip">
+          <div><span class="secret-stamp">P.S.</span><div><b>There are little secrets hidden around this page.</b><small>Look for tiny stars and hearts. They have things to tell you.</small></div></div>
+          <button class="secret-star" type="button" data-secret="Psst, Shona… if I could choose one person to annoy with love for the rest of my life, I'd choose you every single time. ♡" aria-label="Reveal a secret message">✦</button>
+          <button class="secret-star" type="button" data-secret="Baby, you don't have to do anything extraordinary to be extraordinary to me. You being you is already enough. ♡" aria-label="Reveal another secret message">♡</button>
+          <button class="secret-star" type="button" data-secret="One tiny reminder: you are loved on the easy days, the messy days, the quiet days, and every day in between. ♡" aria-label="Reveal another secret message">✧</button>
+        </div>
+        <div class="secret-reveal" id="secretReveal" role="status" aria-live="polite" hidden></div>
+      </div>
+      <div class="chapter-footer"><span>MORE MEMORIES LOADING… ♡</span><button class="next-btn" data-next="10">One last thing <span>→</span></button></div>
+    </section>
+
+    <!-- CHAPTER 10 -->
+    <section class="screen chapter finale" id="chapter-10" aria-labelledby="ch10-title" hidden>
+      <div class="finale-hearts" aria-hidden="true"><span>♡</span><span>✧</span><span>♡</span><span>✦</span><span>୨୧</span><span>♡</span><span>✧</span><span>♡</span></div>
+      <div class="chapter-inner finale-content">
+        <span class="chapter-kicker">CHAPTER TEN · THE THING I HOPE YOU ALWAYS KNOW</span>
+        <div class="final-crown">♕</div>
+        <p class="script-kicker">Happy birthday, my Baby</p>
+        <h2 id="ch10-title">In every version of my future, <em>I hope I find you.</em></h2>
+        <p class="finale-letter">Thank you for being part of my life, for believing in me, for loving me in the ways you do, and for making this little world of ours feel like home.</p>
+        <p class="finale-letter">I can't promise that every day will be perfect, but I promise to keep learning how to love you better, to keep discovering you, to keep making memories with you, and to keep choosing you when life gets complicated.</p>
+        <p class="finale-love">I love you very much, Shona.<br>And I want to keep loving you, always. <span>♡</span></p>
+        <button class="primary-btn hug-btn" id="hugBtn" type="button">One more hug? <span>♡</span></button>
+        <p class="hug-message" id="hugMessage" hidden>Sending you the biggest birthday hug in the universe. Hold it for as long as you need, Baby. ♡</p>
+        <div class="final-signature">Forever your boy <span>♡</span></div>
+        <button class="restart-btn" id="restartBtn" type="button">Read our little story again ↺</button>
+      </div>
+    </section>
+  </main>
+
+  <audio id="ourSong" preload="none" loop>
+    <source src="assets/our-song.mp3" type="audio/mpeg">
+  </audio>
+
+  <dialog class="photo-dialog" id="photoDialog">
+    <button class="dialog-close" id="closePhotoDialog" type="button" aria-label="Close photo">×</button>
+    <img id="dialogPhoto" src="assets/photos/photo-placeholder.svg" alt="Selected memory">
+    <p id="dialogCaption"></p>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><p class="noscript">This birthday website needs JavaScript enabled for the chapter navigation and surprises.</p></noscript>
+</body>
+</html>
