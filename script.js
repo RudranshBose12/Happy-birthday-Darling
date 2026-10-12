@@ -37,24 +37,7 @@ function showHome() {
 
 // Expose a direct opening action so the first button still works if another
 // interaction script later encounters an unrelated error.
-window.openBirthdaySurprise = function () {
-  const firstChapter = document.getElementById("chapter-1");
-  if (!firstChapter) return;
-  home.hidden = true;
-  home.classList.remove("active");
-  chapters.forEach(ch => {
-    const active = ch.id === "chapter-1";
-    ch.hidden = !active;
-    ch.classList.toggle("active", active);
-  });
-  currentChapter = 1;
-  chapterNav.hidden = false;
-  chapterCount.textContent = "01 / 10";
-  progressFill.style.width = "10%";
-  chapterMenu.hidden = true;
-  chapterMenuBtn.setAttribute("aria-expanded", "false");
-  window.scrollTo({ top: 0, behavior: "smooth" });
-};
+window.openBirthdaySurprise = function () { showChapter(1); };
 
 function showChapter(number) {
   const n = Math.min(10, Math.max(1, Number(number)));
@@ -79,7 +62,7 @@ function showChapter(number) {
   }
 }
 
-$("#beginBtn").addEventListener("click", () => window.openBirthdaySurprise());
+$("#beginBtn").addEventListener("click", event => { event.preventDefault(); showChapter(1); });
 $("#homeBtn").addEventListener("click", showHome);
 $$("[data-next]").forEach(button => button.addEventListener("click", () => showChapter(button.dataset.next)));
 chapterMenuBtn.addEventListener("click", () => {
