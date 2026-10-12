@@ -333,3 +333,19 @@ h1 { font: 600 clamp(3.7rem,11vw,7.7rem)/1.03 var(--serif); color: #4e8bc3; lett
   .hero-copy { margin: 1.2rem auto 1.4rem; }
   .primary-btn { width: min(100%, 28rem); padding: .95rem 1.1rem; }
 }
+
+
+/* Keep the memory photo neatly contained on small screens */
+.memory-collage .polaroid:first-child {
+  min-width: 0;
+  overflow: hidden;
+}
+.memory-collage .polaroid:first-child img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+.memory-collage .polaroid:first-child figcaption {
+  overflow-wrap: anywhere;
+}
