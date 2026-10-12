@@ -297,3 +297,39 @@ h1 { font: 600 clamp(3.7rem,11vw,7.7rem)/1.03 var(--serif); color: #4e8bc3; lett
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+
+/* Opening screen spacing and small-screen alignment fixes */
+.hero-content {
+  box-sizing: border-box;
+  padding-left: clamp(1rem, 5vw, 2rem);
+  padding-right: clamp(1rem, 5vw, 2rem);
+  margin-inline: auto;
+}
+.hero-copy {
+  max-width: 38rem;
+  text-wrap: pretty;
+  overflow-wrap: normal;
+  word-spacing: normal;
+  line-height: 1.7;
+}
+.primary-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  max-width: 100%;
+  min-height: 3.5rem;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.35;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+@media (max-width: 600px) {
+  .home-screen { min-height: calc(100svh - 64px); padding: 1.5rem 0 4.5rem; box-sizing: border-box; }
+  .hero-content { padding-top: 1.25rem; padding-bottom: 1.5rem; }
+  .hero-copy { margin: 1.2rem auto 1.4rem; }
+  .primary-btn { width: min(100%, 28rem); padding: .95rem 1.1rem; }
+}
