@@ -39,6 +39,16 @@ function showHome() {
 // interaction script later encounters an unrelated error.
 window.openBirthdaySurprise = function () { showChapter(1); };
 
+// Keep chapter navigation responsive even if another feature fails later.
+window.showBirthdayChapter = function (number) { showChapter(number); };
+document.addEventListener("click", event => {
+  const nextButton = event.target.closest && event.target.closest("[data-next]");
+  if (nextButton) {
+    event.preventDefault();
+    window.showBirthdayChapter(nextButton.dataset.next);
+  }
+});
+
 function showChapter(number) {
   const n = Math.min(10, Math.max(1, Number(number)));
   home.hidden = true;
