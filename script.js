@@ -311,40 +311,6 @@ $("#quizNext").addEventListener("click", () => {
   if (quizIndex < quizQuestions.length - 1) {
     quizIndex++;
     renderQuiz();
-  } else {
-    $("#quizQuestion").textContent = "Your final result: 100% my favorite person.";
-    $("#quizOptions").innerHTML = "";
-    $("#quizFeedback").textContent = "Whether you got every answer right or not, you're still my favorite answer to everything. Come here and collect your prize: kisses. ♡";
-    $("#quizFeedback").hidden = false;
-    $("#quizNext").hidden = true;
-    $("#quizStep").textContent = "QUIZ COMPLETE · LOVE YOU ALWAYS";
-    $("#quizProgressFill").style.width = "100%";
-    const restart = document.createElement("button");
-    restart.type = "button";
-    restart.className = "secondary-btn";
-    restart.textContent = "Play again ♡";
-    restart.addEventListener("click", () => { quizIndex = 0; renderQuiz(); });
-    $("#quizOptions").appendChild(restart);
-  }
-});
-renderQuiz();
-  } else {
-    $("#quizQuestion").textContent = "Your final result: 100% my favorite person.";
-    $("#quizOptions").innerHTML = "";
-    $("#quizFeedback").textContent = "Whether you got every answer right or not, you're still my favorite answer to everything. Come here and collect your prize: kisses. ♡";
-    $("#quizFeedback").hidden = false;
-    $("#quizNext").hidden = true;
-    $("#quizStep").textContent = "QUIZ COMPLETE · LOVE YOU ALWAYS";
-    $("#quizProgressFill").style.width = "100%";
-    const restart = document.createElement("button");
-    restart.type = "button";
-    restart.className = "secondary-btn";
-    restart.textContent = "Play again ♡";
-    restart.addEventListener("click", () => { quizIndex = 0; renderQuiz(); });
-    $("#quizOptions").appendChild(restart);
-  }
-});
-renderQuiz();
 
 // Gallery dialog.
 const photoDialog = $("#photoDialog");
