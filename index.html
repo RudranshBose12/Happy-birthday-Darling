@@ -209,7 +209,7 @@
         <p class="star-poem">The world is enormous, and life will take us through places we haven't seen yet. But no matter how big the universe gets, I hope we keep finding our way back to our little world.</p>
         <div class="star-signature">you, me, and all the tomorrows ♡</div>
       </div>
-      <div class="chapter-footer"><span>MY FAVORITE CONSTELLATION IS YOU ✧</span><button class="next-btn" data-next="7" type="button" onclick="window.showBirthdayChapter ? window.showBirthdayChapter(7) : document.getElementById('chapter-7').removeAttribute('hidden')">A little gift <span>→</span></button></div>
+      <div class="chapter-footer"><span>MY FAVORITE CONSTELLATION IS YOU ✧</span><button class="next-btn" data-next="7" type="button" onclick="(function(){var home=document.getElementById('home'),chapters=document.querySelectorAll('.chapter'),nav=document.getElementById('chapterNav'),target=document.getElementById('chapter-7');home.hidden=true;home.classList.remove('active');chapters.forEach(function(ch){var active=ch===target;ch.hidden=!active;ch.classList.toggle('active',active)});nav.hidden=false;var count=document.getElementById('chapterCount'),fill=document.getElementById('progressFill'),menu=document.getElementById('chapterMenu'),menuBtn=document.getElementById('chapterMenuBtn');if(count)count.textContent='07 / 10';if(fill)fill.style.width='70%';if(menu)menu.hidden=true;if(menuBtn)menuBtn.setAttribute('aria-expanded','false');window.scrollTo(0,0);if(window.showBirthdayChapter)window.showBirthdayChapter(7)})()">A little gift <span>→</span></button></div>
     </section>
 
     <!-- CHAPTER 7 -->
