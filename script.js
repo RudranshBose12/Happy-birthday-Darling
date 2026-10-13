@@ -474,11 +474,10 @@ function escapeHTML(value) {
   const board=$id("starBoard"), bg=$id("starBackground"), targets=$id("starTargets"), lines=$id("starConnections"), preview=$id("starPreview");
   if(!board || !start) return;
   const NS="http://www.w3.org/2000/svg";
-  const pts=[[500,456],[435,408],[370,357],[315,303],[285,248],[296,205],[330,180],[370,184],[415,218],[460,255],[500,286],[540,255],[585,218],[630,184],[670,180],[704,205],[715,248],[685,303],[630,357],[565,408]];
+  const pts=[[500,475],[385,405],[280,320],[240,235],[275,165],[350,160],[420,220],[500,292],[580,220],[650,160],[725,165],[760,235],[720,320],[615,405]];
   const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let connected=0, dragging=false, pointerId=null, suppressClick=false, completed=false, soundOn=true;
-  window.starHeartGameCompleted=false;
-  try { if(localStorage.getItem("sreejani-star-heart-completed")==="yes") window.starHeartGameCompleted=true; } catch(e) {}
+  window.starHeartGameCompleted=false; // Always reset on a page refresh; never persist game progress.
   const el=(tag,attrs={})=>{const n=document.createElementNS(NS,tag);Object.keys(attrs).forEach(k=>n.setAttribute(k,attrs[k]));return n;};
   function makeBg(){let seed=4421;const rnd=()=>{seed=(seed*16807)%2147483647;return(seed-1)/2147483646;};for(let i=0;i<145;i++){const c=el("circle",{cx:12+rnd()*976,cy:8+rnd()*604,r:.6+rnd()*1.5,class:"star-distant",opacity:.25+rnd()*.6});c.style.animationDelay=(rnd()*5)+"s";bg.appendChild(c);}}
   function drawTargets(){targets.replaceChildren();pts.forEach((p,i)=>{const g=el("g",{"data-index":i,tabindex:"0",role:"button",class:"star-target"+(i===connected?" is-current":i===connected+1?" is-next":i<connected?" is-connected":""),"aria-label":i===0?"Starting star":"Star "+(i+1)+" of "+pts.length});g.appendChild(el("circle",{cx:p[0],cy:p[1],r:23,class:"star-hit-area"}));g.appendChild(el("circle",{cx:p[0],cy:p[1],r:i===connected?7:5,class:"star-core"}));g.appendChild(el("path",{d:"M "+p[0]+" "+(p[1]-10)+" L "+(p[0]+2)+" "+(p[1]-2)+" L "+(p[0]+10)+" "+p[1]+" L "+(p[0]+2)+" "+(p[1]+2)+" L "+p[0]+" "+(p[1]+10)+" L "+(p[0]-2)+" "+(p[1]+2)+" L "+(p[0]-10)+" "+p[1]+" L "+(p[0]-2)+" "+(p[1]-2)+" Z",class:"star-rays"}));g.addEventListener("pointerdown",down);g.addEventListener("pointerup",up);g.addEventListener("keydown",key);g.addEventListener("click",click);targets.appendChild(g);});}
@@ -487,15 +486,21 @@ function escapeHTML(value) {
   function say(s){$id("starGameHint").textContent=s;}
   function dust(x,y){if(reduced)return;const group=$id("starParticles");for(let i=0;i<8;i++){const p=el("circle",{cx:x,cy:y,r:1.5+Math.random()*2,class:"star-dust"});p.style.setProperty("--dx",((Math.random()-.5)*65)+"px");p.style.setProperty("--dy",((Math.random()-.5)*65)+"px");group.appendChild(p);p.addEventListener("animationend",()=>p.remove(),{once:true});}}
   function wrong(){say("Almost, Shona — look for the softly glowing next star. Your progress is safe. ♡");board.classList.remove("star-mistake");void board.getBoundingClientRect();board.classList.add("star-mistake");setTimeout(()=>board.classList.remove("star-mistake"),350);}
-  function connect(){if(completed||connected>=pts.length-1)return;connected++;dust(pts[connected][0],pts[connected][1]);progress();if(connected===pts.length-1){completed=true;lines.setAttribute("points",pts.concat([pts[0]]).map(p=>p.join(",")).join(" "));finish();}else say("Beautiful. Follow the next little light. ♡");}
+  function connect(){if(completed||connected>=pts.length-1)return;connected++;starTone(connected);dust(pts[connected][0],pts[connected][1]);progress();if(connected===pts.length-1){completed=true;lines.setAttribute("points",pts.concat([pts[0]]).map(p=>p.join(",")).join(" "));finish();}else say("Beautiful. Follow the next little light. ♡");}
   function down(e){if(completed)return;const i=Number(e.currentTarget.dataset.index);if(i===connected){dragging=true;pointerId=e.pointerId;preview.setAttribute("opacity",".85");if(connected===0)say("Lovely. Now drag from each glowing star to the next pink light.");}}
   function up(e){if(!dragging||pointerId!==e.pointerId)return;const i=Number(e.currentTarget.dataset.index);if(i===connected+1){connect();suppressClick=true;}else if(i!==connected)wrong();dragging=false;pointerId=null;preview.setAttribute("opacity","0");}
   function click(e){if(suppressClick){suppressClick=false;return;}if(completed)return;const i=Number(e.currentTarget.dataset.index);if(connected===0&&i===0){say("Starting star found. Now drag from it to the next glowing light.");return;}if(i===connected+1){connect();}else if(i!==connected)wrong();}
   function key(e){if(e.key!=="Enter"&&e.key!==" ")return;e.preventDefault();if(completed)return;const i=Number(e.currentTarget.dataset.index);if(connected===0&&i===0){say("Starting star found. Focus the next glowing star and press Enter.");return;}if(i===connected+1)connect();else if(i!==connected)wrong();}
   board.addEventListener("pointermove",e=>{if(!dragging)return;const m=board.getScreenCTM();if(!m)return;const p=board.createSVGPoint();p.x=e.clientX;p.y=e.clientY;const q=p.matrixTransform(m.inverse());preview.setAttribute("x2",q.x);preview.setAttribute("y2",q.y);});
   board.addEventListener("pointerup",()=>{dragging=false;pointerId=null;preview.setAttribute("opacity","0");});
+
+  // A tiny, distinct synthesized note for each star, plus a soft click for all buttons.
+  let soundContext=null;
+  function getSoundContext(){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;if(!soundContext)soundContext=new C();if(soundContext.state==="suspended")soundContext.resume().catch(()=>{});return soundContext;}
+  function starTone(step){if(!soundOn)return;try{const ctx=getSoundContext();if(!ctx)return;const scale=[523.25,587.33,659.25,698.46,783.99,880,987.77,1046.5,1174.66,1318.51,1174.66,1046.5,987.77,880];const o=ctx.createOscillator(),g=ctx.createGain(),t=ctx.currentTime;o.type="sine";o.frequency.setValueAtTime(scale[(step-1)%scale.length],t);o.frequency.exponentialRampToValueAtTime(scale[(step-1)%scale.length]*1.25,t+.12);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.055,t+.018);g.gain.exponentialRampToValueAtTime(.0001,t+.24);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+.26);}catch(e){}}
+
   function chime(){if(!soundOn)return;try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const ctx=new C(),t=ctx.currentTime;[659.25,783.99,987.77].forEach((hz,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type="sine";o.frequency.value=hz;g.gain.setValueAtTime(.0001,t+i*.13);g.gain.exponentialRampToValueAtTime(.07,t+i*.13+.03);g.gain.exponentialRampToValueAtTime(.0001,t+i*.13+.65);o.connect(g);g.connect(ctx.destination);o.start(t+i*.13);o.stop(t+i*.13+.7);});setTimeout(()=>ctx.close(),1300);}catch(e){}}
-  function finish(){window.starHeartGameCompleted=true;try{localStorage.setItem("sreejani-star-heart-completed","yes");}catch(e){}chime();$id("starGame").classList.add("star-game-complete");$id("starLockNote").textContent="The heart is yours now ♡";say("You found it, Shona. ♡");setTimeout(()=>{play.hidden=true;win.hidden=false;win.classList.add("star-win-reveal");},reduced?0:700);}
+  function finish(){window.starHeartGameCompleted=true;chime();$id("starGame").classList.add("star-game-complete");$id("starLockNote").textContent="The heart is yours now ♡";say("You found it, Shona. ♡");setTimeout(()=>{play.hidden=true;win.hidden=false;win.classList.add("star-win-reveal");},reduced?0:700);}
   window.startStarHeartGame = function() {
     if (!intro || !play) return;
     intro.hidden = true;
@@ -513,5 +518,26 @@ function escapeHTML(value) {
   $id("starSoundToggle").addEventListener("click",e=>{soundOn=!soundOn;e.currentTarget.textContent=soundOn?"♫ Sound on":"♫ Sound off";e.currentTarget.setAttribute("aria-pressed",String(!soundOn));e.currentTarget.setAttribute("aria-label",soundOn?"Mute completion chime":"Enable completion chime");});
   $id("continueStarStory").addEventListener("click",()=>{if(completed)window.showBirthdayChapter(7);});
   makeBg();progress();
-  if(window.starHeartGameCompleted){completed=true;connected=pts.length-1;intro.hidden=true;play.hidden=true;win.hidden=false;$id("starLockNote").textContent="The heart is yours now ♡";progress();}
+})();
+
+ 
+// Consistent, gentle UI sounds for every regular button across the site.
+(() => {
+  let ctx=null;
+  function clickTone(){
+    try {
+      const C=window.AudioContext||window.webkitAudioContext;
+      if(!C)return;
+      if(!ctx)ctx=new C();
+      if(ctx.state==="suspended")ctx.resume().catch(()=>{});
+      const t=ctx.currentTime,o=ctx.createOscillator(),g=ctx.createGain();
+      o.type="sine";o.frequency.setValueAtTime(740,t);o.frequency.exponentialRampToValueAtTime(560,t+.055);
+      g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.025,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+.075);
+      o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+.08);
+    } catch(e) {}
+  }
+  document.addEventListener("click",event=>{
+    const button=event.target.closest&&event.target.closest("button");
+    if(button&&!button.disabled)clickTone();
+  },true);
 })();
