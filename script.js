@@ -1,6 +1,6 @@
 /* Personalize this file whenever you want to update the birthday experience. */
 const BIRTHDAY = "2026-10-19";
-const INITIAL_MEETS = 13;
+const INITIAL_MEETS = 12;
 const TOTAL_MEETS = 100;
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -153,21 +153,67 @@ document.addEventListener("keydown", event => {
   if (event.key === "Escape") closeReasonModal();
 });
 
-// 100-meets tracker. Only the count is asserted; meet names/dates aren't invented.
+// 100-meets tracker: the first 12 dates have their own editable memory cards.
+const meetMemories = [["The beginning of us","Where you held my hands for the first time."],["Our first date","The first time we went out of the campus together."],["The rose that made me feel special","The day you gave me a rose, a proposal, and a scented hair tie."],["Our book fair date","Wandering around the book fair and spending such a lovely time together."],["Our park adventure","Just the two of us, making an ordinary day feel special."],["Our temple visit","We visited Durga Temple, and you bought me a toy car."],["Our auto-ride romance","You kissed me and placed my hand inside."],["The food we shared","Momos, drinks, and waffles together."],["Our rainy chaos","Our plans went horribly wrong, but we still had each other."],["Our little DIY adventure","We went to DIY and looked around at all the different things together."],["The day you took care of me","Even when things didn't go as planned, you were there for me."],["The wallet and Rasulullah","You gave me things, but what I treasured most was the thought behind them."]];
 const meetGrid = $("#meetGrid");
+const MEET_DETAILS_KEY = "birthdayMeetDetailsV1";
+function readMeetDetails() {
+  try { return JSON.parse(localStorage.getItem(MEET_DETAILS_KEY) || "{}"); }
+  catch { return {}; }
+}
+function writeMeetDetails(details) {
+  try { localStorage.setItem(MEET_DETAILS_KEY, JSON.stringify(details)); }
+  catch { showToast("Your browser couldn't save this date on this device."); }
+}
+const meetDetailsModal = $("#meetDetailsModal");
+const meetDetailsForm = $("#meetDetailsForm");
+const meetDetailsDate = $("#meetDetailsDate");
+const meetDetailsTitle = $("#meetDetailsTitle");
+const meetDetailsSummary = $("#meetDetailsSummary");
+const meetDetailsNumber = $("#meetDetailsNumber");
+const meetDetailsClose = () => { meetDetailsModal.hidden = true; document.body.classList.remove("meet-details-open"); };
+let activeMeetNumber = 1;
+
 for (let i = 1; i <= TOTAL_MEETS; i++) {
   const dot = document.createElement("button");
   dot.type = "button";
   dot.className = `meet-dot${i <= INITIAL_MEETS ? " completed" : ""}`;
   dot.textContent = i <= INITIAL_MEETS ? "♥" : "·";
-  dot.setAttribute("aria-label", i <= INITIAL_MEETS ? `Meet ${i}, completed. Add its memory in script.js when ready.` : `Meet ${i}, waiting to happen.`);
-  dot.title = i <= INITIAL_MEETS ? `Meet ${i} — memory details can be added later` : `Meet ${i} — a future memory`;
+  dot.setAttribute("aria-label", i <= INITIAL_MEETS ? `Meet ${i}: ${meetMemories[i-1][0]}` : `Meet ${i}, waiting to happen.`);
+  dot.title = i <= INITIAL_MEETS ? `Meet ${i} — ${meetMemories[i-1][0]}` : `Meet ${i} — a future memory`;
   dot.addEventListener("click", () => {
-    if (i <= INITIAL_MEETS) showToast(`Meet ${i} is part of your story already. Add its photo or memory whenever you're ready. ♡`);
-    else showToast(`Meet ${i} is waiting to become a memory. One more adventure together, Shona. ♡`);
+    if (i > INITIAL_MEETS) {
+      showToast(`Meet ${i} is waiting to become a memory. One more adventure together, Shona. ♡`);
+      return;
+    }
+    activeMeetNumber = i;
+    const memory = meetMemories[i - 1];
+    const saved = readMeetDetails()[i] || {};
+    meetDetailsNumber.textContent = `MEET ${String(i).padStart(2,"0")} OF 100`;
+    meetDetailsTitle.textContent = memory[0];
+    meetDetailsSummary.value = saved.summary ?? memory[1];
+    meetDetailsDate.value = saved.date || "";
+    meetDetailsModal.hidden = false;
+    document.body.classList.add("meet-details-open");
+    $("#meetDetailsDate").focus();
   });
   meetGrid.appendChild(dot);
 }
+meetDetailsForm.addEventListener("submit", event => {
+  event.preventDefault();
+  const details = readMeetDetails();
+  details[activeMeetNumber] = {
+    date: meetDetailsDate.value,
+    summary: meetDetailsSummary.value.trim()
+  };
+  writeMeetDetails(details);
+  meetDetailsClose();
+  showToast(`Meet ${activeMeetNumber} saved. This little memory is yours. ♡`);
+});
+$$("[data-close-meet-details]").forEach(control => control.addEventListener("click", meetDetailsClose));
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && meetDetailsModal && !meetDetailsModal.hidden) meetDetailsClose();
+});
 function updateMeetCount(count) {
   const safeCount = Math.min(TOTAL_MEETS, Math.max(0, Number(count) || 0));
   $("#meetCount").textContent = safeCount;
