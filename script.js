@@ -379,13 +379,48 @@ $$("[data-secret]").forEach(button => button.addEventListener("click", () => {
 const audio = $("#ourSong");
 const musicToggle = $("#musicToggle");
 const musicLabel = $("#musicLabel");
+const musicControl = $("#musicControl");
+const musicPopover = $("#musicPopover");
+const songVolume = $("#songVolume");
+const songVolumeValue = $("#songVolumeValue");
+let musicPopoverTimer = null;
 let songAvailable = true;
+audio.volume = 0.5;
+function showMusicPopover() {
+  if (!musicPopover || !musicControl) return;
+  clearTimeout(musicPopoverTimer);
+  musicPopover.hidden = false;
+  musicControl.classList.add("is-open");
+}
+function hideMusicPopoverSoon() {
+  clearTimeout(musicPopoverTimer);
+  musicPopoverTimer = setTimeout(() => {
+    if (musicControl && !musicControl.matches(":hover") && !musicPopover.contains(document.activeElement)) {
+      musicPopover.hidden = true;
+      musicControl.classList.remove("is-open");
+    }
+  }, 3500);
+}
+if (musicControl && musicPopover) {
+  musicControl.addEventListener("pointerenter", showMusicPopover);
+  musicControl.addEventListener("pointerleave", hideMusicPopoverSoon);
+  musicControl.addEventListener("focusin", showMusicPopover);
+  musicControl.addEventListener("focusout", hideMusicPopoverSoon);
+  musicToggle.addEventListener("click", () => { showMusicPopover(); hideMusicPopoverSoon(); });
+}
+if (songVolume) {
+  songVolume.addEventListener("input", () => {
+    audio.volume = Number(songVolume.value) / 100;
+    songVolumeValue.textContent = songVolume.value + "%";
+    showMusicPopover();
+  });
+}
 audio.addEventListener("error", () => {
   songAvailable = false;
   musicLabel.textContent = "Add our song";
 });
 audio.addEventListener("play", () => { musicToggle.setAttribute("aria-pressed", "true"); musicLabel.textContent = "Pause song"; });
-audio.addEventListener("pause", () => { musicToggle.setAttribute("aria-pressed", "false"); musicLabel.textContent = "Our song"; });
+audio.addEventListener("pause", () => { musicToggle.setAttribute("aria-pressed", "false"); musicLabel.textContent = "Our song"; if (musicControl) { showMusicPopover(); hideMusicPopoverSoon(); } });
 
 // Start the song as soon as the page opens. Browsers may block audible
 // autoplay, so retry on the visitor's first tap/click or key press.
@@ -497,7 +532,7 @@ function escapeHTML(value) {
   // A tiny, distinct synthesized note for each star, plus a soft click for all buttons.
   let soundContext=null;
   function getSoundContext(){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;if(!soundContext)soundContext=new C();if(soundContext.state==="suspended")soundContext.resume().catch(()=>{});return soundContext;}
-  function starTone(step){if(!soundOn)return;try{const ctx=getSoundContext();if(!ctx)return;const scale=[523.25,587.33,659.25,698.46,783.99,880,987.77,1046.5,1174.66,1318.51,1174.66,1046.5,987.77,880];const o=ctx.createOscillator(),g=ctx.createGain(),t=ctx.currentTime;o.type="sine";o.frequency.setValueAtTime(scale[(step-1)%scale.length],t);o.frequency.exponentialRampToValueAtTime(scale[(step-1)%scale.length]*1.25,t+.12);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.055,t+.018);g.gain.exponentialRampToValueAtTime(.0001,t+.24);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+.26);}catch(e){}}
+  function starTone(step){if(soundOn&&window.playAudioEffect)window.playAudioEffect("starSparkleSound");}
 
   function chime(){if(!soundOn)return;try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const ctx=new C(),t=ctx.currentTime;[659.25,783.99,987.77].forEach((hz,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type="sine";o.frequency.value=hz;g.gain.setValueAtTime(.0001,t+i*.13);g.gain.exponentialRampToValueAtTime(.07,t+i*.13+.03);g.gain.exponentialRampToValueAtTime(.0001,t+i*.13+.65);o.connect(g);g.connect(ctx.destination);o.start(t+i*.13);o.stop(t+i*.13+.7);});setTimeout(()=>ctx.close(),1300);}catch(e){}}
   function finish(){window.starHeartGameCompleted=true;chime();$id("starGame").classList.add("star-game-complete");$id("starLockNote").textContent="The heart is yours now ♡";say("You found it, Shona. ♡");setTimeout(()=>{play.hidden=true;win.hidden=false;win.classList.add("star-win-reveal");},reduced?0:700);}
@@ -521,23 +556,22 @@ function escapeHTML(value) {
 })();
 
  
-// Consistent, gentle UI sounds for every regular button across the site.
-(() => {
-  let ctx=null;
-  function clickTone(){
-    try {
-      const C=window.AudioContext||window.webkitAudioContext;
-      if(!C)return;
-      if(!ctx)ctx=new C();
-      if(ctx.state==="suspended")ctx.resume().catch(()=>{});
-      const t=ctx.currentTime,o=ctx.createOscillator(),g=ctx.createGain();
-      o.type="sine";o.frequency.setValueAtTime(740,t);o.frequency.exponentialRampToValueAtTime(560,t+.055);
-      g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.025,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+.075);
-      o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+.08);
-    } catch(e) {}
-  }
-  document.addEventListener("click",event=>{
-    const button=event.target.closest&&event.target.closest("button");
-    if(button&&!button.disabled)clickTone();
-  },true);
-})();
+// Use the three supplied sound files for consistent, soft interface audio.
+window.playAudioEffect = function(id) {
+  const source = document.getElementById(id);
+  if (!source) return;
+  try {
+    const sound = source.cloneNode(true);
+    sound.volume = 0.8;
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
+    sound.addEventListener("ended", () => sound.remove(), {once:true});
+  } catch (e) {}
+};
+document.addEventListener("click", event => {
+  const button = event.target.closest && event.target.closest("button");
+  if (!button || button.disabled) return;
+  if (button.id === "startStarGame" || button.closest("#starTargets")) return;
+  window.playAudioEffect("uiClickSound");
+  if (button.matches("[data-next]")) window.playAudioEffect("chapterCompleteSound");
+}, true);
