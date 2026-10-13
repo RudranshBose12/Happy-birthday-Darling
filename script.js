@@ -206,8 +206,8 @@ function blowCandles() {
   const wish = $("#wishReveal");
   if (wish) wish.hidden = false;
   $(".cake-instruction").textContent = "Wish made. May the universe be gentle with you, Shona. ♡";
-  launchBirthdayConfetti();
   playBirthdayAsset(confettiPopSound);
+  launchBirthdayConfetti();
   window.setTimeout(() => playBirthdayAsset(birthdaySound), 180);
 }
 cake.addEventListener("click", blowCandles);
