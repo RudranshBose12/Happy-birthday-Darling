@@ -572,6 +572,10 @@ document.addEventListener("click", event => {
   const button = event.target.closest && event.target.closest("button");
   if (!button || button.disabled) return;
   if (button.id === "startStarGame" || button.closest("#starTargets")) return;
-  window.playAudioEffect("uiClickSound");
-  if (button.matches("[data-next]")) window.playAudioEffect("chapterCompleteSound");
+  // Page-navigation buttons get the completion melody instead of the ordinary click.
+  if (button.matches("[data-next]")) {
+    window.playAudioEffect("chapterCompleteSound");
+  } else {
+    window.playAudioEffect("uiClickSound");
+  }
 }, true);
