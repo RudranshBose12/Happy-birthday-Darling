@@ -133,12 +133,12 @@ function closeReasonModal() {
   if (!reasonModal || reasonModal.hidden) return;
   reasonModal.hidden = true;
   document.body.classList.remove("reason-modal-open");
-  $(".reason-card").forEach(item => item.classList.remove("opened"));
+  $$(".reason-card").forEach(item => item.classList.remove("opened"));
   if (reasonModalReturnFocus && document.contains(reasonModalReturnFocus)) reasonModalReturnFocus.focus();
 }
 
-$(".reason-card").forEach((card, index) => card.addEventListener("click", () => {
-  $(".reason-card").forEach(item => item.classList.toggle("opened", item === card));
+$$(".reason-card").forEach((card, index) => card.addEventListener("click", () => {
+  $$(".reason-card").forEach(item => item.classList.toggle("opened", item === card));
   reasonModalReturnFocus = card;
   reasonModalTitle.textContent = card.querySelector("b")?.textContent || "A little reason";
   reasonModalMessage.textContent = card.dataset.reason || "";
@@ -148,7 +148,7 @@ $(".reason-card").forEach((card, index) => card.addEventListener("click", () => 
   reasonModal.querySelector(".reason-modal-close")?.focus();
 }));
 
-$("[data-close-reason-modal]").forEach(control => control.addEventListener("click", closeReasonModal));
+$$("[data-close-reason-modal]").forEach(control => control.addEventListener("click", closeReasonModal));
 document.addEventListener("keydown", event => {
   if (event.key === "Escape") closeReasonModal();
 });
