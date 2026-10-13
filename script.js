@@ -377,6 +377,22 @@ audio.addEventListener("error", () => {
 });
 audio.addEventListener("play", () => { musicToggle.setAttribute("aria-pressed", "true"); musicLabel.textContent = "Pause song"; });
 audio.addEventListener("pause", () => { musicToggle.setAttribute("aria-pressed", "false"); musicLabel.textContent = "Our song"; });
+
+// Start the song as soon as the page opens. Browsers may block audible
+// autoplay, so retry on the visitor's first tap/click or key press.
+async function tryAutoPlaySong() {
+  if (!songAvailable || !audio || !audio.querySelector("source")?.getAttribute("src") || !audio.paused) return;
+  try {
+    await audio.play();
+    document.removeEventListener("pointerdown", tryAutoPlaySong);
+    document.removeEventListener("keydown", tryAutoPlaySong);
+  } catch {
+    // Autoplay is commonly blocked until a real user interaction.
+  }
+}
+tryAutoPlaySong();
+document.addEventListener("pointerdown", tryAutoPlaySong);
+document.addEventListener("keydown", tryAutoPlaySong);
 musicToggle.addEventListener("click", async () => {
   if (!songAvailable || !audio.querySelector("source").getAttribute("src")) {
     showToast("Add your chosen song as assets/our-song.mp3, then refresh the page. ♡");
