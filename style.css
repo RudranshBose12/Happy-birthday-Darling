@@ -544,3 +544,114 @@ button:active:not(:disabled) {
 .screen:not([hidden]) .tracker-card,
 .screen:not([hidden]) .love-letter,
 .screen:not([hidden]) .next-date-card { animation-fill-mode: backwards; }
+
+
+/* More visible (but still gentle) motion pass: ensure animations are noticeable. */
+@keyframes visibleStarTwinkle {
+  0%, 100% { opacity: .28; transform: scale(.82); }
+  50% { opacity: .95; transform: scale(1.12); }
+}
+@keyframes visibleFloat {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -10px; }
+}
+@keyframes visibleChapterEnter {
+  from { opacity: 0; translate: 0 12px; }
+  to { opacity: 1; translate: 0 0; }
+}
+@keyframes cardHoverBreathe {
+  0%, 100% { box-shadow: 0 8px 25px rgba(70,123,173,.06); }
+  50% { box-shadow: 0 12px 30px rgba(70,123,173,.12); }
+}
+@keyframes starSkyPulse {
+  0%, 100% { opacity: .28; }
+  50% { opacity: .55; }
+}
+
+/* A second sparse layer makes the existing Chapter 6 sky visibly twinkle. */
+#chapter-6 .starfield { position: absolute; }
+#chapter-6 .starfield::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 14% 32%, rgba(255,255,255,.95) 45%, transparent 70%),
+    radial-gradient(2px 2px at 31% 14%, rgba(199,222,255,.9) 45%, transparent 70%),
+    radial-gradient(1.5px 1.5px at 63% 24%, rgba(255,226,242,.95) 45%, transparent 70%),
+    radial-gradient(2px 2px at 83% 43%, rgba(255,255,255,.9) 45%, transparent 70%),
+    radial-gradient(1.5px 1.5px at 76% 78%, rgba(199,222,255,.9) 45%, transparent 70%),
+    radial-gradient(2px 2px at 24% 72%, rgba(255,226,242,.9) 45%, transparent 70%);
+  background-size: 100% 100%;
+  animation: starSkyPulse 4.5s ease-in-out infinite alternate;
+}
+#chapter-6 .starfield::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 8% 56%, #fff 45%, transparent 70%),
+    radial-gradient(2px 2px at 48% 82%, #d4e5ff 45%, transparent 70%),
+    radial-gradient(1.5px 1.5px at 91% 18%, #fff 45%, transparent 70%),
+    radial-gradient(1.5px 1.5px at 57% 48%, #f8c9e2 45%, transparent 70%);
+  background-size: 100% 100%;
+  animation: starSkyPulse 6s ease-in-out 1.2s infinite alternate-reverse;
+}
+
+/* Make the existing ambient hearts visibly drift and softly breathe. */
+.ambient .floaty {
+  animation: drift 13s ease-in-out infinite, ambientBreath 5.5s ease-in-out infinite;
+}
+.ambient .f2 { animation-delay: -3s, -1.2s; }
+.ambient .f3 { animation-delay: -5s, -2.3s; }
+.ambient .f4 { animation-delay: -7s, -3.1s; }
+.ambient .f5 { animation-delay: -2s, -.8s; }
+.ambient .f6 { animation-delay: -8s, -4s; }
+
+/* Headings and message blocks get a clear, short entrance on every chapter visit. */
+.screen.active:not(.home-screen) .center-heading,
+.screen.active:not(.home-screen) .chapter-heading,
+.screen.active:not(.home-screen) .chapter-inner,
+.screen.active:not(.home-screen) .star-game-intro,
+.screen.active:not(.home-screen) .star-game-win {
+  animation: visibleChapterEnter .75s cubic-bezier(.2,.7,.2,1) both;
+}
+.screen.active:not(.home-screen) .chapter-footer {
+  animation: visibleChapterEnter .7s ease .12s both;
+}
+.screen.active:not(.home-screen) .reason-card,
+.screen.active:not(.home-screen) .polaroid {
+  animation: cardSoftEnter .6s ease both;
+}
+.screen.active:not(.home-screen) .reason-card:nth-child(2),
+.screen.active:not(.home-screen) .polaroid:nth-child(2) { animation-delay: .08s; }
+.screen.active:not(.home-screen) .reason-card:nth-child(3),
+.screen.active:not(.home-screen) .polaroid:nth-child(3) { animation-delay: .16s; }
+.screen.active:not(.home-screen) .reason-card:nth-child(4) { animation-delay: .12s; }
+.screen.active:not(.home-screen) .reason-card:nth-child(5) { animation-delay: .2s; }
+.screen.active:not(.home-screen) .reason-card:nth-child(6) { animation-delay: .28s; }
+.screen.active:not(.home-screen) .reason-card:nth-child(7) { animation-delay: .36s; }
+.screen.active:not(.home-screen) .reason-card:nth-child(8) { animation-delay: .44s; }
+#chapter-6 .star-target.is-next .star-hit-area {
+  animation: starHalo 1.8s ease-in-out infinite;
+}
+#chapter-6 .star-target.is-next .star-core {
+  animation: visibleStarTwinkle 2.4s ease-in-out infinite;
+}
+#chapter-6 .star-game-btn {
+  animation: cardHoverBreathe 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #chapter-6 .starfield::before,
+  #chapter-6 .starfield::after,
+  .screen.active:not(.home-screen) .center-heading,
+  .screen.active:not(.home-screen) .chapter-heading,
+  .screen.active:not(.home-screen) .chapter-inner,
+  .screen.active:not(.home-screen) .star-game-intro,
+  .screen.active:not(.home-screen) .star-game-win,
+  .screen.active:not(.home-screen) .chapter-footer,
+  .screen.active:not(.home-screen) .reason-card,
+  .screen.active:not(.home-screen) .polaroid,
+  #chapter-6 .star-target.is-next .star-core,
+  #chapter-6 .star-game-btn { animation: none !important; }
+}
