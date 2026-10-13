@@ -81,7 +81,20 @@ chapterMenuBtn.addEventListener("click", () => {
   chapterMenu.hidden = !opening;
   chapterMenuBtn.setAttribute("aria-expanded", String(opening));
 });
-$("[data-chapter]", chapterMenu).forEach(button => button.addEventListener("click", () => { if (Number(button.dataset.chapter) === 7 && !window.starHeartGameCompleted) { showToast("Chapter 7 unlocks after you connect the heart. ♡"); chapterMenu.hidden = true; chapterMenuBtn.setAttribute("aria-expanded", "false"); return; } showChapter(button.dataset.chapter); }));
+// Use delegated handling so every chapter menu item works reliably.
+chapterMenu.addEventListener("click", event => {
+  const button = event.target.closest("button[data-chapter]");
+  if (!button || !chapterMenu.contains(button)) return;
+  event.preventDefault();
+  const target = Number(button.dataset.chapter);
+  chapterMenu.hidden = true;
+  chapterMenuBtn.setAttribute("aria-expanded", "false");
+  if (target >= 7 && !window.starHeartGameCompleted) {
+    showToast("First, let the stars show you a little secret. ♡");
+    return;
+  }
+  showChapter(target);
+});
 document.addEventListener("keydown", event => {
   if (event.key === "Escape" && !chapterMenu.hidden) {
     chapterMenu.hidden = true;
@@ -488,7 +501,20 @@ function escapeHTML(value) {
   board.addEventListener("pointerup",()=>{dragging=false;pointerId=null;preview.setAttribute("opacity","0");});
   function chime(){if(!soundOn)return;try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const ctx=new C(),t=ctx.currentTime;[659.25,783.99,987.77].forEach((hz,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type="sine";o.frequency.value=hz;g.gain.setValueAtTime(.0001,t+i*.13);g.gain.exponentialRampToValueAtTime(.07,t+i*.13+.03);g.gain.exponentialRampToValueAtTime(.0001,t+i*.13+.65);o.connect(g);g.connect(ctx.destination);o.start(t+i*.13);o.stop(t+i*.13+.7);});setTimeout(()=>ctx.close(),1300);}catch(e){}}
   function finish(){window.starHeartGameCompleted=true;try{localStorage.setItem("sreejani-star-heart-completed","yes");}catch(e){}chime();$id("starGame").classList.add("star-game-complete");$id("starLockNote").textContent="The heart is yours now ♡";say("You found it, Shona. ♡");setTimeout(()=>{play.hidden=true;win.hidden=false;win.classList.add("star-win-reveal");},reduced?0:700);}
-  start.addEventListener("click",()=>{intro.hidden=true;play.hidden=false;$id("starGame").classList.add("star-game-started");say("Tap the first glowing star, then drag from star to star. You can also tap the next star.");if(!bg.childElementCount)makeBg();progress();});
+  window.startStarHeartGame = function() {
+    if (!intro || !play) return;
+    intro.hidden = true;
+    play.hidden = false;
+    $id("starGame").classList.add("star-game-started");
+    say("Tap the first glowing star, then tap or drag to the next glowing star.");
+    if (!bg.childElementCount) makeBg();
+    progress();
+  };
+  start.addEventListener("click", window.startStarHeartGame);
+  document.addEventListener("click", event => {
+    const button = event.target.closest && event.target.closest("#startStarGame");
+    if (button && play.hidden) window.startStarHeartGame();
+  });
   $id("starSoundToggle").addEventListener("click",e=>{soundOn=!soundOn;e.currentTarget.textContent=soundOn?"♫ Sound on":"♫ Sound off";e.currentTarget.setAttribute("aria-pressed",String(!soundOn));e.currentTarget.setAttribute("aria-label",soundOn?"Mute completion chime":"Enable completion chime");});
   $id("continueStarStory").addEventListener("click",()=>{if(completed)window.showBirthdayChapter(7);});
   makeBg();progress();
