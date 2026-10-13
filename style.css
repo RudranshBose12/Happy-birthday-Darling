@@ -673,3 +673,23 @@ body.reason-modal-open { overflow: hidden; }
 @keyframes reasonBackdropIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes reasonModalIn { from { opacity: 0; transform: translateY(12px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
 @media (prefers-reduced-motion: reduce) { .reason-modal-backdrop, .reason-modal-card { animation: none !important; } }
+
+
+/* Editable memories for the first twelve dates. */
+.meet-details-modal[hidden]{display:none!important}
+.meet-details-modal{position:fixed;inset:0;z-index:140;display:grid;place-items:center;padding:1rem}
+.meet-details-backdrop{position:absolute;inset:0;background:rgba(36,57,83,.42);backdrop-filter:blur(7px)}
+.meet-details-card{position:relative;z-index:1;width:min(100%,490px);max-height:min(90vh,760px);overflow:auto;padding:2rem clamp(1.25rem,5vw,2.5rem);border:1px solid rgba(173,207,237,.85);border-radius:25px;background:linear-gradient(145deg,#fff,#f2f8ff);box-shadow:0 24px 90px rgba(38,73,111,.25);text-align:center;animation:reasonModalIn .25s ease both}
+.meet-details-close{position:absolute;right:.8rem;top:.7rem;width:2.25rem;height:2.25rem;border:1px solid rgba(112,164,211,.25);border-radius:50%;background:#fff;color:#6b8fb2;font-size:1.5rem;cursor:pointer}
+.meet-details-kicker{margin:0 0 .5rem;color:#91abc3;font-size:.65rem;letter-spacing:.18em}
+.meet-details-heart{display:block;color:#e5a5c4;font-size:2.2rem;line-height:1.2}
+.meet-details-card h3{margin:.45rem 0 1.3rem;color:#4f7ba5;font:600 clamp(1.35rem,4vw,1.8rem)/1.25 var(--serif)}
+.meet-details-card form{text-align:left;display:grid;gap:.55rem}
+.meet-details-card label{margin-top:.45rem;color:#52799f;font-size:.82rem;font-weight:600}
+.meet-details-card input,.meet-details-card textarea{width:100%;box-sizing:border-box;border:1px solid #d4e4f5;border-radius:12px;background:rgba(255,255,255,.9);padding:.75rem .85rem;color:#456f98;font:inherit;outline:none}
+.meet-details-card input:focus,.meet-details-card textarea:focus{border-color:#9fc7eb;box-shadow:0 0 0 3px rgba(159,199,235,.2)}
+.meet-details-card textarea{resize:vertical;line-height:1.6}
+.meet-details-note{margin:.25rem 0;color:#8aa2ba;font-size:.72rem;line-height:1.5}
+.meet-details-save{margin-top:.35rem;padding:.8rem 1rem;border:1px solid #c8def4;border-radius:999px;background:#fff;color:#4d79a2;font:inherit;cursor:pointer;transition:transform .2s,background .2s}
+.meet-details-save:hover{background:#f7fbff;transform:translateY(-1px)}
+body.meet-details-open{overflow:hidden}
