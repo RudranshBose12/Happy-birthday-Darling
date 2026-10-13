@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Sacramento&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=9">
-  <script src="script.js?v=11" defer></script>
+  <link rel="stylesheet" href="style.css?v=10">
+  <script src="script.js?v=12" defer></script>
 </head>
 <body>
   <div class="ambient" aria-hidden="true">
@@ -166,7 +166,17 @@
           <button class="reason-card" type="button" data-reason="The way you choose me, and the way you make room for my dreams while still following yours. I love being on your team."><span>♡</span><small>reason no. 07</small><b>Choosing each other</b><i>tap to open</i></button>
           <button class="reason-card" type="button" data-reason="You can turn a day that isn't going well into a memory I want to keep forever. Sometimes your presence is the whole plot twist."><span>♡</span><small>reason no. 08</small><b>Your everyday magic</b><i>tap to open</i></button>
         </div>
-        <div class="reason-reveal" id="reasonReveal" role="status" aria-live="polite"><span class="reveal-heart">♡</span><p>Every little thing about you gives me another reason to fall in love.</p></div>
+        <div class="reason-modal" id="reasonModal" hidden>
+          <div class="reason-modal-backdrop" data-close-reason-modal></div>
+          <section class="reason-modal-card" role="dialog" aria-modal="true" aria-labelledby="reasonModalTitle" aria-describedby="reasonModalMessage">
+            <button class="reason-modal-close" type="button" aria-label="Close message" data-close-reason-modal>×</button>
+            <span class="reason-modal-heart" aria-hidden="true">♡</span>
+            <p class="reason-modal-kicker" id="reasonModalKicker">A LITTLE REASON</p>
+            <h3 id="reasonModalTitle">Your little reason</h3>
+            <p class="reason-modal-message" id="reasonModalMessage"></p>
+            <span class="reason-modal-signoff">always, with love ♡</span>
+          </section>
+        </div>
       </div>
       <div class="chapter-footer"><span>AND I COULD KEEP GOING FOREVER ♡</span><button class="next-btn" data-next="5">Our 100 meets <span>→</span></button></div>
     </section>
