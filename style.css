@@ -655,3 +655,21 @@ button:active:not(:disabled) {
   #chapter-6 .star-target.is-next .star-core,
   #chapter-6 .star-game-btn { animation: none !important; }
 }
+
+
+/* Chapter 4: show each hidden reason in a soft, dismissible pop-up. */
+.reason-modal[hidden] { display: none !important; }
+.reason-modal { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; padding: 1.25rem; }
+.reason-modal-backdrop { position: absolute; inset: 0; background: rgba(39, 65, 91, .34); backdrop-filter: blur(7px); animation: reasonBackdropIn .22s ease both; }
+.reason-modal-card { position: relative; z-index: 1; width: min(100%, 520px); padding: clamp(2rem, 6vw, 3rem) clamp(1.4rem, 5vw, 2.8rem) 2rem; text-align: center; border: 1px solid rgba(173, 207, 237, .85); border-radius: 26px; background: linear-gradient(145deg, rgba(255,255,255,.99), rgba(242,248,255,.98)); box-shadow: 0 24px 90px rgba(38, 73, 111, .24); animation: reasonModalIn .3s cubic-bezier(.2,.8,.2,1) both; }
+.reason-modal-close { position: absolute; top: .7rem; right: .85rem; width: 2.35rem; height: 2.35rem; display: grid; place-items: center; border: 1px solid rgba(112,164,211,.22); border-radius: 50%; background: rgba(255,255,255,.8); color: #6b8fb2; font-size: 1.65rem; line-height: 1; cursor: pointer; }
+.reason-modal-close:hover { background: #fff; color: #c66e9a; transform: rotate(90deg); }
+.reason-modal-heart { display: block; margin-bottom: .6rem; color: #e5a5c4; font-size: 2.8rem; line-height: 1; }
+.reason-modal-kicker { margin: 0 0 .6rem; color: #91abc3; font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; }
+.reason-modal-card h3 { margin: 0 0 1rem; color: #4f7ba5; font: 600 clamp(1.45rem, 4vw, 1.9rem)/1.25 var(--serif); }
+.reason-modal-message { margin: 0 auto; max-width: 410px; color: #5e80a1; font: 400 clamp(1.05rem, 2.5vw, 1.2rem)/1.8 var(--serif); }
+.reason-modal-signoff { display: block; margin-top: 1.4rem; color: #c47ba0; font: 1.3rem var(--script); }
+body.reason-modal-open { overflow: hidden; }
+@keyframes reasonBackdropIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes reasonModalIn { from { opacity: 0; transform: translateY(12px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@media (prefers-reduced-motion: reduce) { .reason-modal-backdrop, .reason-modal-card { animation: none !important; } }
