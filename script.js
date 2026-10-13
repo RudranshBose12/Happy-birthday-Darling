@@ -111,7 +111,17 @@ function playBirthdayAsset(audio) {
   if (result && typeof result.catch === "function") result.catch(() => {});
 }
 
+let confettiPageLoaded = false;
 function launchBirthdayConfetti() {
+  // Load the supplied ConfettiPage effect only after the cake is clicked.
+  if (!confettiPageLoaded) {
+    confettiPageLoaded = true;
+    const script = document.createElement("script");
+    script.src = "https://run.confettipage.com/here.js";
+    script.dataset.confetticode = "U2FsdGVkX1+vTXV7Ujge2j4OFgpC90Gitwmj079CxCSPlRZWV9CPW7BHCgu8DjLvwpz19heLZ8lph3qA36ND50I/ltyLa7+OO4/o8ccVZvfeCcgfaisEaqiu0tXP7u0hhMMdtIopgJay0rSvHym3tt5LjswgMP8fUA2aOAezF4EeID6DNXyLy8w06InBuNmxcizBeCyRu86IOwG6Pj2dvNJ9v1ppdmXd0pYW7IhgBhUwUsuYevNg5/tkYr88q2u1QZJY0+UKlW5G5eYRURr0cIBZziJCxXTAufhbb0KcY1HT2gdRJZ4LDTOBguXul4xYXY0o+t2gjyNpYCpODxOGppqPFve/6c7q9Xxt0RZhSozHnCubBzuGmzs/EZNa9SlJE/SHh0af5sgFLyvFtUOwNK4f5Ion/uUW39qlj+K0aPSKNsVZGAWXGyalQdtEDsF4YbGNkKkBYG5l682dBU1LDcgMrGXpHIqmaHftIc+B+tD8HDGu5JYgp5cnWxijWrV7nbHPEwejBD4sYBGtXojmhukW/jojYMN+YaxVF/RpPp0GwWBekP7q4gae5Lxterxu9VTLSA7PfW64CbQztSycUqO90yIrn5QXwBnbQZFLKQrUiDZRv5X18uvekvFJCOg1KgF45WNTBTOc94I8Se/V9gEhA1E5AVaLc6rX40xFVD1lUePz1pjIdjDy1uXMxD+LWZqJHDJ+XND6oFAFWXAybijf8LzSs2FTlkjrifhlB1itBYYeTDdWXwj4K0EjzIc/mbUg4kf9pbWuGiMA56W2ZeLXfTv+7RLHVwSAy22n0M/6m6ziML+lVMo4AGMfQH01";
+    script.async = true;
+    document.body.appendChild(script);
+  }
   const layer = document.createElement("div");
   layer.className = "birthday-confetti-layer";
   layer.setAttribute("aria-hidden", "true");
