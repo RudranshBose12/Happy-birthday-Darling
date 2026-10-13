@@ -51,7 +51,6 @@ document.addEventListener("click", event => {
 
 function showChapter(number) {
   const n = Math.min(10, Math.max(1, Number(number)));
-  if (n >= 7 && !window.starHeartGameCompleted) { showToast("First, let the stars show you a little secret. ♡"); return; }
   home.hidden = true;
   home.classList.remove("active");
   chapters.forEach(ch => {
@@ -89,10 +88,6 @@ chapterMenu.addEventListener("click", event => {
   const target = Number(button.dataset.chapter);
   chapterMenu.hidden = true;
   chapterMenuBtn.setAttribute("aria-expanded", "false");
-  if (target >= 7 && !window.starHeartGameCompleted) {
-    showToast("First, let the stars show you a little secret. ♡");
-    return;
-  }
   showChapter(target);
 });
 document.addEventListener("keydown", event => {
