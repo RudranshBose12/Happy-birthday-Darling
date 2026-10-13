@@ -376,7 +376,7 @@ h1 { font: 600 clamp(3.7rem,11vw,7.7rem)/1.03 var(--serif); color: #4e8bc3; lett
 .star-hit-area{fill:transparent;stroke:transparent;stroke-width:2}
 .star-core{fill:#eaf3ff;filter:url(#starGlow);transition:r .2s,fill .2s}
 .star-rays{fill:#c6ddff;opacity:.7;transition:fill .2s,opacity .2s;pointer-events:none}
-.star-target.is-current .star-core{fill:#ffd4e9}
+.star-target.is-current .star-core,.star-target.is-next .star-core{fill:#ffd4e9}.star-target.is-next .star-rays{fill:#ffb7dc;opacity:1}.star-target.is-next .star-hit-area{stroke:rgba(255,194,225,.22);animation:starHalo 1.8s ease-in-out infinite}
 .star-target.is-current .star-rays{fill:#ffb7dc;opacity:1}
 .star-target.is-current .star-hit-area{stroke:rgba(255,194,225,.28);animation:starHalo 1.6s ease-in-out infinite}
 .star-target.is-connected .star-core{fill:#ffcae5}
