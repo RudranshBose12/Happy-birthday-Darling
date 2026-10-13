@@ -556,23 +556,67 @@ function escapeHTML(value) {
 })();
 
  
-// Use the three supplied sound files for consistent, soft interface audio.
+// Use the supplied sound files. If the completion MP3 is missing/unavailable,
+// play a short built-in melody so page navigation never becomes silent.
+function playFallbackCompletionMelody() {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const notes = [659.25, 783.99, 987.77, 1174.66];
+    const startAt = ctx.currentTime + 0.02;
+    notes.forEach((hz, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const at = startAt + i * 0.14;
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(hz, at);
+      gain.gain.setValueAtTime(0.0001, at);
+      gain.gain.exponentialRampToValueAtTime(0.075, at + 0.025);
+      gain.gain.exponentialRampToValueAtTime(0.0001, at + 0.48);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(at);
+      osc.stop(at + 0.5);
+    });
+    setTimeout(() => ctx.close().catch(() => {}), 1100);
+  } catch (e) {}
+}
 window.playAudioEffect = function(id) {
   const source = document.getElementById(id);
-  if (!source) return;
+  if (!source) {
+    if (id === "chapterCompleteSound") playFallbackCompletionMelody();
+    return;
+  }
+  let fallbackUsed = false;
+  const fallback = () => {
+    if (id === "chapterCompleteSound" && !fallbackUsed) {
+      fallbackUsed = true;
+      playFallbackCompletionMelody();
+    }
+  };
   try {
     const sound = source.cloneNode(true);
     sound.volume = 0.8;
     sound.currentTime = 0;
-    sound.play().catch(() => {});
+    sound.addEventListener("error", fallback, {once:true});
+    const result = sound.play();
+    if (result && typeof result.catch === "function") result.catch(fallback);
+    // The file currently may be missing from the repository; use the fallback
+    // if the browser never successfully starts playback.
+    if (id === "chapterCompleteSound") setTimeout(() => {
+      if (sound.error || sound.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) fallback();
+    }, 500);
     sound.addEventListener("ended", () => sound.remove(), {once:true});
-  } catch (e) {}
+  } catch (e) {
+    fallback();
+  }
 };
 document.addEventListener("click", event => {
   const button = event.target.closest && event.target.closest("button");
   if (!button || button.disabled) return;
   if (button.id === "startStarGame" || button.closest("#starTargets")) return;
-  // Page-navigation buttons get the completion melody instead of the ordinary click.
+  // Navigation plays only the completion melody; all other buttons use the click sound.
   if (button.matches("[data-next]")) {
     window.playAudioEffect("chapterCompleteSound");
   } else {
