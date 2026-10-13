@@ -405,3 +405,16 @@ h1 { font: 600 clamp(3.7rem,11vw,7.7rem)/1.03 var(--serif); color: #4e8bc3; lett
 @keyframes starShake{25%{transform:translateX(-2px)}75%{transform:translateX(2px)}}
 @media(max-width:600px){#chapter-6{padding-left:.55rem;padding-right:.55rem}.star-game{min-height:calc(100svh - 165px)}.star-game-intro{padding:2rem .55rem}.star-game-topline{padding:0 .2rem}.star-game-hint{font-size:.8rem;margin:.5rem auto 0}.star-board{max-height:48svh}.star-keyboard-help{font-size:.62rem}.star-game-footer{gap:.4rem}.star-lock-note{font-size:.64rem}.star-win-copy{line-height:1.7}}
 @media(prefers-reduced-motion:reduce){.star-distant,.star-target.is-current .star-hit-area,.star-win-heart{animation:none!important}}
+
+
+/* A tiny, floating music control that matches the birthday-universe palette. */
+.music-control{position:relative;display:inline-flex;align-items:center}
+.music-popover{position:absolute;z-index:40;top:calc(100% + .55rem);right:0;width:min(245px,calc(100vw - 2rem));padding:.8rem .9rem .85rem;border:1px solid rgba(105,157,205,.24);border-radius:16px;background:rgba(255,255,255,.97);box-shadow:0 14px 38px rgba(70,123,173,.2);backdrop-filter:blur(14px);animation:musicPopoverIn .18s ease both}
+.music-popover[hidden]{display:none!important}
+.music-popover label{display:flex;align-items:center;justify-content:space-between;gap:.6rem;color:var(--blue-dark);font-size:.76rem;font-weight:600;margin-bottom:.55rem}
+.music-popover label span{color:var(--pink-dark)}
+.music-popover output{color:var(--pink-dark);font-size:.72rem;font-variant-numeric:tabular-nums}
+.music-popover input[type=range]{display:block;width:100%;height:5px;accent-color:#b978a0;cursor:pointer}
+.music-control.is-open .sound-toggle{border-color:rgba(183,109,146,.4);background:#fff}
+@keyframes musicPopoverIn{from{opacity:0;transform:translateY(-4px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:560px){.topbar{gap:.5rem}.topbar-right{gap:.45rem}.tiny-label{display:none}.music-popover{right:0;width:min(230px,calc(100vw - 1.5rem))}}
