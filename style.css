@@ -536,3 +536,11 @@ button:active:not(:disabled) {
   }
   button, a, .reason-card, .meet-dot { transition: none !important; }
 }
+
+/* Let hover styles take over cleanly after card entrance animations finish. */
+.screen:not([hidden]) .reason-card,
+.screen:not([hidden]) .polaroid,
+.screen:not([hidden]) .world-note,
+.screen:not([hidden]) .tracker-card,
+.screen:not([hidden]) .love-letter,
+.screen:not([hidden]) .next-date-card { animation-fill-mode: backwards; }
