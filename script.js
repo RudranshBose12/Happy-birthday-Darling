@@ -144,7 +144,7 @@ function blowCandles() {
   if (wish) wish.hidden = true;
   $(".cake-instruction").textContent = "Wish made. ♡";
   launchBirthdayConfetti();
-  playConfettiPop();
+  playBirthdayAsset(confettiPopSound);
   window.setTimeout(() => playBirthdayAsset(birthdaySound), 180);
 }
 cake.addEventListener("click", blowCandles);
