@@ -711,3 +711,7 @@ body.meet-details-open{overflow:hidden}
 /* Ensure each candle visibly flickers as well as glowing. */
 .cake:not(.blown) .flame { animation: candleFlicker .42s ease-in-out infinite alternate, flameGlow .8s ease-in-out infinite alternate !important; }
 @keyframes candleFlicker { 0% { transform: translateY(1px) rotate(-9deg) scaleX(.86) scaleY(1.04); } 100% { transform: translateY(-1px) rotate(8deg) scaleX(1.08) scaleY(.88); } }
+
+
+/* Full-screen canvas confetti, limited to a short celebration burst. */
+.birthday-confetti-canvas { position: fixed; inset: 0; z-index: 300; display: block; pointer-events: none; }
