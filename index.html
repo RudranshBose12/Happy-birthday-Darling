@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Sacramento&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=4">
-  <script src="script.js?v=4" defer></script>
+  <script src="script.js?v=5" defer></script>
 </head>
 <body>
   <div class="ambient" aria-hidden="true">
@@ -197,20 +197,7 @@
     </section>
 
     <!-- CHAPTER 6 -->
-    <section class="screen chapter stars-chapter" id="chapter-6" aria-labelledby="ch6-title" hidden>
-      <div class="starfield" aria-hidden="true"></div>
-      <div class="chapter-inner stars-content">
-        <span class="chapter-kicker">CHAPTER SIX · A LITTLE COSMIC TRUTH</span>
-        <p class="script-kicker">Somewhere between the moon and me</p>
-        <h2 id="ch6-title">Even the stars would find their way to <em>you.</em></h2>
-        <div class="constellation" aria-hidden="true"><span>✦</span><span>·</span><span>♡</span><span>·</span><span>✧</span><span>·</span><span>✦</span></div>
-        <p class="lead narrow">If I could give you a galaxy, I would.</p>
-        <p class="star-poem">But since I can't, I'll keep giving you the little pieces of my universe that I can: my time, my attention, my honesty, my affection, my dreams, and the promise that I want you beside me as I grow.</p>
-        <p class="star-poem">The world is enormous, and life will take us through places we haven't seen yet. But no matter how big the universe gets, I hope we keep finding our way back to our little world.</p>
-        <div class="star-signature">you, me, and all the tomorrows ♡</div>
-      </div>
-      <div class="chapter-footer"><span>MY FAVORITE CONSTELLATION IS YOU ✧</span><button class="next-btn" data-next="7" type="button" onclick="(function(){var home=document.getElementById('home'),chapters=document.querySelectorAll('.chapter'),nav=document.getElementById('chapterNav'),target=document.getElementById('chapter-7');home.hidden=true;home.classList.remove('active');chapters.forEach(function(ch){var active=ch===target;ch.hidden=!active;ch.classList.toggle('active',active)});nav.hidden=false;var count=document.getElementById('chapterCount'),fill=document.getElementById('progressFill'),menu=document.getElementById('chapterMenu'),menuBtn=document.getElementById('chapterMenuBtn');if(count)count.textContent='07 / 10';if(fill)fill.style.width='70%';if(menu)menu.hidden=true;if(menuBtn)menuBtn.setAttribute('aria-expanded','false');window.scrollTo(0,0);if(window.showBirthdayChapter)window.showBirthdayChapter(7)})()">A little gift <span>→</span></button></div>
-    </section>
+    <section class="screen chapter stars-chapter" id="chapter-6" aria-labelledby="ch6-title" hidden><div class="starfield" aria-hidden="true"></div><div class="star-game" id="starGame"><div class="star-game-intro" id="starGameIntro"><span class="chapter-kicker">CHAPTER SIX · A LITTLE COSMIC TRUTH</span><p class="script-kicker">Somewhere between the moon and me…</p><h2 id="ch6-title">I have a little secret hidden among the stars.</h2><p class="star-game-instruction">Follow the little lights, Shona. Connect the stars and see what the sky has been hiding for you.</p><button class="star-game-btn" id="startStarGame" type="button">Let’s find it ✨</button></div><div class="star-game-play" id="starGamePlay" hidden><div class="star-game-topline"><span class="chapter-kicker">A LITTLE SECRET IN THE SKY</span><button class="star-sound-btn" id="starSoundToggle" type="button" aria-pressed="false">♫ Sound on</button></div><p class="star-game-hint" id="starGameHint" aria-live="polite">Tap the first glowing star, then drag from each star to the next little light.</p><div class="star-board-wrap"><svg class="star-board" id="starBoard" viewBox="0 0 1000 620" role="group" aria-label="Connect the glowing stars in order to reveal a heart."><defs><radialGradient id="starSkyGlow"><stop offset="0%" stop-color="#f8c9e2" stop-opacity=".20"/><stop offset="100%" stop-color="#f8c9e2" stop-opacity="0"/></radialGradient><filter id="starGlow" x="-200%" y="-200%" width="400%" height="400%"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><ellipse cx="500" cy="300" rx="430" ry="270" fill="url(#starSkyGlow)"/><g id="starBackground" aria-hidden="true"></g><polyline id="starConnections" points="" fill="none" stroke="#f5b9da" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#starGlow)"/><line id="starPreview" x1="0" y1="0" x2="0" y2="0" stroke="#d9c5ff" stroke-width="2" stroke-dasharray="4 8" opacity="0"/><g id="starTargets"></g><g id="starParticles" aria-hidden="true"></g></svg></div><div class="star-game-progress"><span id="starProgressText">0 of 20 connections completed</span><div class="star-progress-track"><span id="starProgressFill"></span></div></div><p class="star-keyboard-help">Keyboard option: focus a star and press Enter to connect it.</p></div><div class="star-game-win" id="starGameWin" hidden><span class="chapter-kicker">THE SKY HAD A SECRET</span><p class="star-win-message">My favorite star will always be you.</p><p class="star-win-copy">Out of all the lights in this endless universe, you’re the one my heart will always look for. No matter how many stars fill the sky, none could ever mean to me what you do.</p><div class="star-win-heart" aria-hidden="true">♡</div><p class="star-win-signature">Found my favorite star. ♡</p><button class="next-btn star-continue-btn" id="continueStarStory" type="button">Continue our story <span>→</span></button></div></div><div class="chapter-footer star-game-footer"><span>MY FAVORITE STAR WILL ALWAYS BE YOU ✧</span><span class="star-lock-note" id="starLockNote">A little secret is waiting to be found ♡</span></div></section>
 
     <!-- CHAPTER 7 -->
     <section class="screen chapter" id="chapter-7" aria-labelledby="ch7-title" hidden>
