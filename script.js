@@ -97,13 +97,85 @@ document.addEventListener("keydown", event => {
   }
 });
 
-// Birthday cake: blow out the candles and reveal the wish.
+// Birthday cake: glowing candle flames, a confetti-and-heart shower, and celebratory sounds.
 const cake = $("#birthdayCake");
+let birthdaySurpriseShown = false;
+let birthdayAudioContext = null;
+
+function birthdayTone(frequency, start, duration, volume = 0.12, type = "sine") {
+  if (!birthdayAudioContext) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+    birthdayAudioContext = new AudioContextClass();
+  }
+  const ctx = birthdayAudioContext;
+  if (ctx.state === "suspended") ctx.resume().catch(() => {});
+  const oscillator = ctx.createOscillator();
+  const gain = ctx.createGain();
+  oscillator.type = type;
+  oscillator.frequency.setValueAtTime(frequency, ctx.currentTime + start);
+  gain.gain.setValueAtTime(0.0001, ctx.currentTime + start);
+  gain.gain.exponentialRampToValueAtTime(volume, ctx.currentTime + start + 0.025);
+  gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + start + duration);
+  oscillator.connect(gain);
+  gain.connect(ctx.destination);
+  oscillator.start(ctx.currentTime + start);
+  oscillator.stop(ctx.currentTime + start + duration + 0.03);
+}
+
+function playConfettiPop() {
+  // A quick fizzy burst made with Web Audio, so no external sound file is needed.
+  for (let i = 0; i < 7; i++) {
+    birthdayTone(420 + Math.random() * 1250, i * 0.018, 0.08 + Math.random() * 0.08, 0.035, "triangle");
+  }
+  birthdayTone(150, 0, 0.16, 0.09, "sawtooth");
+}
+
+function playHappyBirthdayJingle() {
+  // A short, recognizable Happy Birthday melody in a bright bell-like tone.
+  const notes = [
+    [392,.00,.22],[392,.25,.18],[440,.48,.38],[392,.90,.38],[523,1.30,.38],[494,1.72,.65],
+    [392,2.48,.22],[392,2.73,.18],[440,2.96,.38],[392,3.38,.38],[587,3.78,.38],[523,4.20,.65]
+  ];
+  notes.forEach(([freq,start,duration]) => birthdayTone(freq,start,duration,.10,"sine"));
+}
+
+function launchBirthdayConfetti() {
+  const layer = document.createElement("div");
+  layer.className = "birthday-confetti-layer";
+  layer.setAttribute("aria-hidden", "true");
+  const pieces = 105;
+  for (let i = 0; i < pieces; i++) {
+    const piece = document.createElement("span");
+    const heart = i % 5 === 0;
+    piece.className = heart ? "birthday-confetti heart-confetti" : "birthday-confetti";
+    piece.textContent = heart ? "♥" : "";
+    piece.style.left = Math.random() * 100 + "%";
+    piece.style.setProperty("--fall-duration", (3.2 + Math.random() * 3.6) + "s");
+    piece.style.setProperty("--fall-delay", (Math.random() * 1.5) + "s");
+    piece.style.setProperty("--drift", (Math.random() * 180 - 90) + "px");
+    piece.style.setProperty("--spin", (Math.random() * 900 - 450) + "deg");
+    piece.style.setProperty("--piece-size", (5 + Math.random() * 8) + "px");
+    layer.appendChild(piece);
+  }
+  const greeting = document.createElement("div");
+  greeting.className = "birthday-confetti-greeting";
+  greeting.textContent = "Happy Birthday, my Queen! ♡";
+  layer.appendChild(greeting);
+  document.body.appendChild(layer);
+  window.setTimeout(() => layer.remove(), 8500);
+}
+
 function blowCandles() {
+  if (birthdaySurpriseShown) return;
+  birthdaySurpriseShown = true;
   cake.classList.add("blown");
   $("#wishReveal").hidden = false;
-  $(".cake-instruction").textContent = "Wish made. May the universe be gentle with you, Shona. ♡";
+  $(".cake-instruction").textContent = "Wish made. Happy birthday, my Queen! ♡";
   createHeartBurst(cake.getBoundingClientRect());
+  launchBirthdayConfetti();
+  playConfettiPop();
+  window.setTimeout(playHappyBirthdayJingle, 220);
 }
 cake.addEventListener("click", blowCandles);
 cake.addEventListener("keydown", event => {
