@@ -112,30 +112,93 @@ function playBirthdayAsset(audio) {
 }
 
 function launchBirthdayConfetti() {
-  const layer = document.createElement("div");
-  layer.className = "birthday-confetti-layer";
-  layer.setAttribute("aria-hidden", "true");
-  const colors = ["#ff5c9a","#ffb347","#ffe066","#57d9c4","#55b7ff","#a78bfa","#ff7b6b","#f472d0","#8be28b"];
-  const pieces = 260;
-  for (let i = 0; i < pieces; i++) {
-    const heart = i % 3 === 0;
-    const piece = document.createElement("span");
-    piece.className = heart ? "birthday-confetti heart-confetti" : "birthday-confetti";
-    piece.textContent = heart ? (i % 2 ? "♥" : "♡") : "";
-    piece.style.left = Math.random() * 100 + "%";
-    piece.style.backgroundColor = colors[i % colors.length];
-    piece.style.color = colors[(i + 3) % colors.length];
-    piece.style.setProperty("--fall-duration", (3.1 + Math.random() * 3.5) + "s");
-    piece.style.setProperty("--fall-delay", (Math.random() * .65) + "s");
-    piece.style.setProperty("--drift", (Math.random() * 260 - 130) + "px");
-    piece.style.setProperty("--spin", (Math.random() * 1080 - 540) + "deg");
-    piece.style.setProperty("--piece-size", (6 + Math.random() * 10) + "px");
-    layer.appendChild(piece);
-  }
-  document.body.appendChild(layer);
-  window.setTimeout(() => layer.remove(), 7800);
-}
+  // A self-contained canvas burst inspired by the supplied HTML-canvas demo.
+  // It runs for five seconds maximum, then stops and removes itself.
+  const canvas = document.createElement("canvas");
+  canvas.className = "birthday-confetti-canvas";
+  canvas.setAttribute("aria-hidden", "true");
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext("2d");
+  if (!ctx) { canvas.remove(); return; }
 
+  const colors = ["#ff8fbd", "#ffd166", "#8ed9ff", "#b9a5ff", "#8ee3c1", "#ffad8a", "#f6c7e8"];
+  const particles = [];
+  const count = Math.min(170, Math.max(100, Math.floor(window.innerWidth / 7)));
+  let width = 0, height = 0, rafId = 0;
+  const startedAt = performance.now();
+  const duration = 5000;
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    canvas.style.width = width + "px";
+    canvas.style.height = height + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function makeParticle(initial = false) {
+    return {
+      x: Math.random() * width,
+      y: initial ? Math.random() * height : -12 - Math.random() * height * .25,
+      size: 4 + Math.random() * 6,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      speed: 1.8 + Math.random() * 3.2,
+      drift: (Math.random() - .5) * 1.8,
+      angle: Math.random() * Math.PI * 2,
+      spin: (Math.random() - .5) * .16,
+      heart: Math.random() < .22,
+      shape: Math.random() < .5 ? "rect" : "ribbon"
+    };
+  }
+  function drawHeart(p) {
+    const s = p.size;
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y + s * .35);
+    ctx.bezierCurveTo(p.x - s * 1.2, p.y - s * .35, p.x - s * .7, p.y - s, p.x, p.y - s * .42);
+    ctx.bezierCurveTo(p.x + s * .7, p.y - s, p.x + s * 1.2, p.y - s * .35, p.x, p.y + s * .35);
+    ctx.fill();
+  }
+  resize();
+  for (let i = 0; i < count; i++) particles.push(makeParticle(true));
+  function frame(now) {
+    const elapsed = now - startedAt;
+    if (elapsed >= duration) {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("resize", resize);
+      canvas.remove();
+      return;
+    }
+    ctx.clearRect(0, 0, width, height);
+    const fade = Math.min(1, (duration - elapsed) / 650);
+    ctx.globalAlpha = fade;
+    for (const p of particles) {
+      p.y += p.speed;
+      p.x += p.drift + Math.sin(p.angle) * .55;
+      p.angle += p.spin;
+      if (p.y > height + 20) Object.assign(p, makeParticle(false));
+      if (p.x < -20) p.x = width + 10;
+      if (p.x > width + 20) p.x = -10;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.angle);
+      ctx.fillStyle = p.color;
+      if (p.heart) {
+        drawHeart({x:0,y:0,size:p.size * 1.25});
+      } else if (p.shape === "ribbon") {
+        ctx.fillRect(-p.size * .35, -p.size, p.size * .7, p.size * 2.1);
+      } else {
+        ctx.fillRect(-p.size * .55, -p.size * .65, p.size * 1.1, p.size * 1.3);
+      }
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+    rafId = requestAnimationFrame(frame);
+  }
+  window.addEventListener("resize", resize);
+  rafId = requestAnimationFrame(frame);
+}
 function blowCandles() {
   if (birthdaySurpriseShown) return;
   birthdaySurpriseShown = true;
