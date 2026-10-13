@@ -141,8 +141,8 @@ function blowCandles() {
   birthdaySurpriseShown = true;
   cake.classList.add("blown");
   const wish = $("#wishReveal");
-  if (wish) wish.hidden = true;
-  $(".cake-instruction").textContent = "Wish made. ♡";
+  if (wish) wish.hidden = false;
+  $(".cake-instruction").textContent = "Wish made. May the universe be gentle with you, Shona. ♡";
   launchBirthdayConfetti();
   playBirthdayAsset(confettiPopSound);
   window.setTimeout(() => playBirthdayAsset(birthdaySound), 180);
