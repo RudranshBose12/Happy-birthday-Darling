@@ -418,3 +418,121 @@ h1 { font: 600 clamp(3.7rem,11vw,7.7rem)/1.03 var(--serif); color: #4e8bc3; lett
 .music-control.is-open .sound-toggle{border-color:rgba(183,109,146,.4);background:#fff}
 @keyframes musicPopoverIn{from{opacity:0;transform:translateY(-4px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:560px){.topbar{gap:.5rem}.topbar-right{gap:.45rem}.tiny-label{display:none}.music-popover{right:0;width:min(230px,calc(100vw - 1.5rem))}}
+
+
+/* Gentle ambient motion — added without changing the existing visual design */
+@keyframes ambientBreath {
+  0%, 100% { opacity: .78; }
+  50% { opacity: 1; }
+}
+@keyframes chapterSoftEnter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes cardSoftEnter {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes gentleStarShimmer {
+  0%, 100% { opacity: .58; }
+  50% { opacity: .78; }
+}
+@keyframes softMessageGlow {
+  0%, 100% { text-shadow: 0 0 0 rgba(255,255,255,0); }
+  50% { text-shadow: 0 0 15px rgba(201,224,255,.12); }
+}
+
+/* Background details: keep the existing drift, add only a faint breathing glow. */
+.ambient .floaty {
+  animation-name: drift, ambientBreath;
+  animation-duration: 13s, 6.5s;
+  animation-timing-function: ease-in-out, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+}
+.hero-sparkle { animation-duration: 3.4s; }
+.starfield { animation: starMove 34s linear infinite, gentleStarShimmer 8s ease-in-out infinite; }
+
+/* Existing content enters softly when a chapter is revealed. */
+.screen:not([hidden]):not(.home-screen) .chapter-heading,
+.screen:not([hidden]):not(.home-screen) .center-heading,
+.screen:not([hidden]):not(.home-screen) .chapter-inner > .tracker-copy,
+.screen:not([hidden]):not(.home-screen) .chapter-inner > .tracker-card {
+  animation: chapterSoftEnter .65s ease both;
+}
+.screen:not([hidden]) h1,
+.screen:not([hidden]) h2 {
+  animation: softMessageGlow 7s ease-in-out 1s infinite;
+}
+.screen:not([hidden]) .chapter-footer {
+  animation: chapterSoftEnter .7s ease .08s both;
+}
+
+/* Existing cards and controls get a restrained entrance and tactile feedback. */
+.screen:not([hidden]) .reason-card,
+.screen:not([hidden]) .polaroid,
+.screen:not([hidden]) .world-note,
+.screen:not([hidden]) .tracker-card,
+.screen:not([hidden]) .love-letter,
+.screen:not([hidden]) .next-date-card {
+  animation: cardSoftEnter .55s ease both;
+}
+.reason-card:nth-child(2), .polaroid:nth-child(2) { animation-delay: .05s; }
+.reason-card:nth-child(3), .polaroid:nth-child(3) { animation-delay: .1s; }
+.reason-card:nth-child(4) { animation-delay: .12s; }
+.reason-card:nth-child(5) { animation-delay: .16s; }
+.reason-card:nth-child(6) { animation-delay: .2s; }
+.reason-card:nth-child(7) { animation-delay: .24s; }
+.reason-card:nth-child(8) { animation-delay: .28s; }
+button, a, .reason-card, .meet-dot {
+  -webkit-tap-highlight-color: transparent;
+}
+button:not(:disabled), a {
+  transition-timing-function: ease;
+}
+button:active:not(:disabled) {
+  transform: scale(.985);
+}
+.primary-btn:hover, .secondary-btn:hover, .next-btn:hover,
+.sound-toggle:hover, .nav-home:hover, .nav-menu-btn:hover,
+.star-game-btn:hover, .star-sound-btn:hover {
+  filter: brightness(1.035);
+}
+
+/* Chapter 6: let the next star softly call attention, without distracting from play. */
+#chapter-6 .star-target.is-next .star-core {
+  animation: gentleStarShimmer 2.8s ease-in-out infinite;
+}
+#chapter-6 .star-target.is-connected .star-core {
+  transition: fill .35s ease;
+}
+#chapter-6 .star-win-message {
+  animation: softMessageGlow 5s ease-in-out 1s infinite;
+}
+#chapter-6 .star-game-btn {
+  animation: ambientBreath 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient .floaty,
+  .hero-sparkle,
+  .starfield,
+  .screen:not([hidden]) h1,
+  .screen:not([hidden]) h2,
+  .screen:not([hidden]) .chapter-footer,
+  .screen:not([hidden]) .chapter-heading,
+  .screen:not([hidden]) .center-heading,
+  .screen:not([hidden]) .chapter-inner > .tracker-copy,
+  .screen:not([hidden]) .chapter-inner > .tracker-card,
+  .screen:not([hidden]) .reason-card,
+  .screen:not([hidden]) .polaroid,
+  .screen:not([hidden]) .world-note,
+  .screen:not([hidden]) .tracker-card,
+  .screen:not([hidden]) .love-letter,
+  .screen:not([hidden]) .next-date-card,
+  #chapter-6 .star-target.is-next .star-core,
+  #chapter-6 .star-win-message,
+  #chapter-6 .star-game-btn {
+    animation: none !important;
+  }
+  button, a, .reason-card, .meet-dot { transition: none !important; }
+}
