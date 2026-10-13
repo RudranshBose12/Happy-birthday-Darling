@@ -122,11 +122,36 @@ $("#openLetterBtn").addEventListener("click", event => {
   if (opening && window.innerWidth < 850) setTimeout(() => letter.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
 });
 
-// Clickable reasons.
-$$(".reason-card").forEach(card => card.addEventListener("click", () => {
-  $$(".reason-card").forEach(item => item.classList.toggle("opened", item === card));
-  $("#reasonReveal").innerHTML = `<span class="reveal-heart">♡</span><p>${escapeHTML(card.dataset.reason)}</p>`;
+// Clickable reasons open their hidden messages in a dismissible modal.
+const reasonModal = $("#reasonModal");
+const reasonModalTitle = $("#reasonModalTitle");
+const reasonModalMessage = $("#reasonModalMessage");
+const reasonModalKicker = $("#reasonModalKicker");
+let reasonModalReturnFocus = null;
+
+function closeReasonModal() {
+  if (!reasonModal || reasonModal.hidden) return;
+  reasonModal.hidden = true;
+  document.body.classList.remove("reason-modal-open");
+  $(".reason-card").forEach(item => item.classList.remove("opened"));
+  if (reasonModalReturnFocus && document.contains(reasonModalReturnFocus)) reasonModalReturnFocus.focus();
+}
+
+$(".reason-card").forEach((card, index) => card.addEventListener("click", () => {
+  $(".reason-card").forEach(item => item.classList.toggle("opened", item === card));
+  reasonModalReturnFocus = card;
+  reasonModalTitle.textContent = card.querySelector("b")?.textContent || "A little reason";
+  reasonModalMessage.textContent = card.dataset.reason || "";
+  reasonModalKicker.textContent = `REASON NO. ${String(index + 1).padStart(2, "0")}`;
+  reasonModal.hidden = false;
+  document.body.classList.add("reason-modal-open");
+  reasonModal.querySelector(".reason-modal-close")?.focus();
 }));
+
+$("[data-close-reason-modal]").forEach(control => control.addEventListener("click", closeReasonModal));
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closeReasonModal();
+});
 
 // 100-meets tracker. Only the count is asserted; meet names/dates aren't invented.
 const meetGrid = $("#meetGrid");
